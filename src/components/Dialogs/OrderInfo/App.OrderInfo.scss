@@ -1,0 +1,92 @@
+.IconRight > svg {
+  top: 60px;
+  right: 40px;
+  left: auto;
+  position: absolute;
+}
+
+.IconRight {
+  position: relative;
+  width: 100%;
+}
+
+.centerModel {
+  top: 50%;
+  transform: translate(-50%, -50%) !important;
+  left: 50%;
+}
+
+.id__order > h2 {
+  color: #f2f2f3;
+  text-shadow: 0px 0px 16px rgba(51, 51, 255, 0.25),
+    0px 0px 8px rgba(51, 51, 255, 0.25), 0px 4px 32px rgba(51, 51, 255, 0.5);
+  font-family: "Iceland";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 144px;
+  margin: 0;
+}
+
+.mainConent {
+  display: flex;
+  flex-direction: column;
+}
+
+.id__order > h3 {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0;
+  font-family: "Jet Brains Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  color: #f2f2f3;
+  margin-top: 0;
+}
+
+.id__order {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.done {
+  width: 107px;
+  height: 102px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.order__info {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  gap: 8px;
+}
+
+.order__info > h4,
+p {
+  margin: 0;
+}
+
+.order__info > h4 {
+  font-family: "Jet Brains Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  color: #f2f2f3;
+}
+
+.order__info > p {
+  color: #8585ad;
+  font-family: "Jet Brains Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.IconRight:hover {
+  cursor: pointer;
+}
