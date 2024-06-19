@@ -1,4 +1,4 @@
-import "./App.InfoBlock.scss";
+import "./InfoBlock.scss";
 import PropTypes from "prop-types";
 
 const InfoBlock = (props) => {

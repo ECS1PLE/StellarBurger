@@ -1,4 +1,4 @@
-import './App.MenuItem.scss'
+import './MenuItem.scss'
 
 function MenuItem(props){
     return(

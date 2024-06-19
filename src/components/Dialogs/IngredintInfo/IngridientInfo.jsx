@@ -1,7 +1,7 @@
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import "./Ingridient.Modal.scss";
-import InfoBlock from "../InfoBlock/App.InfoBLock";
+import "./IngridientInfo.scss";
+import InfoBlock from "../InfoBlock/InfoBLock";
 
 const IngridientModal = (props) => {
   return (

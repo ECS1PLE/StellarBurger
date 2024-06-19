@@ -17,5 +17,22 @@
 
 .constructor-element_pos_top,
 .constructor-element_pos_bottom {
-  margin-right: 17px;
+  margin-right: 27px;
+  width:528px;
+}
+
+.BurgerConstructorBlock{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 585px;
+}
+
+.drgagNdropBlock{
+  display: flex;
+  gap: 8px;
+}
+
+.mTop{
+  margin-top: auto;
 }

@@ -1,6 +1,6 @@
 import {Logo, BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import './App.Header.scss'
-import MenuItem from '../MenuItem/App.MenuItem'
+import './header.scss'
+import MenuItem from '../MenuItem/MenuItem'
 
 const Header = () =>{
     return(

@@ -1,4 +1,4 @@
-import "./App.Ingredient.scss";
+import "./ingredient.scss";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 

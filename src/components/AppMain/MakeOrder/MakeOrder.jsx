@@ -1,9 +1,9 @@
-import "./App.makeOrder.scss";
+import "./MakeOrder.scss";
 import {
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import OrderInfo from "../../Dialogs/OrderInfo/App.OrderInfo";
+import OrderInfo from "../../Dialogs/OrderInfo/OrderInfo";
 import { useState } from "react";
 
 const MakeOrder = () => {

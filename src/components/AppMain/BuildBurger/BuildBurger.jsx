@@ -1,9 +1,9 @@
-import "./App.BuildBurger.scss";
-import CustomTab from "../CustomTab/App.CustomTab";
-import Ingredient from "../Ingredient/App.Ingredient";
+import "./BuildBurger.scss";
+import CustomTab from "../CustomTab/CustomTab";
+import Ingredient from "../Ingredient/ingridient";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect, useState } from "react";
-import { IngridientModal } from "../../Dialogs/IngredintInfo/Ingridient.Modal";
+import { IngridientModal } from "../../Dialogs/IngredintInfo/IngridientInfo";
 
 const detailKeys = {
   calories: "Калории,ккал",

@@ -1,11 +1,11 @@
 import React from "react";
-import "./App.CustomTab.scss";
+import "./CustomTab.scss";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const CustomTab = () => {
   const [current, setCurrent] = React.useState("one");
   return (
-    <div style={{ display: "flex" }}>
+    <div className="flex">
       <a href="#bun">
         <Tab value="one" active={current === "one"} onClick={setCurrent}>
           Булки

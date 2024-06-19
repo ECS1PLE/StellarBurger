@@ -1,4 +1,4 @@
-import "./App.OrderInfo.scss";
+import "./OrderInfo.scss";
 import PropTypes from "prop-types";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
