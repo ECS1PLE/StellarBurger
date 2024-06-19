@@ -1,4 +1,4 @@
-import "./MakeOrder.scss";
+import styles from "./MakeOrder.module.scss";
 import {
   CurrencyIcon,
   Button,
@@ -13,8 +13,8 @@ const MakeOrder = () => {
       {showModal && (
         <OrderInfo open={showModal} onClose={() => setShowModaL(false)} />
       )}
-      <div className="MakeOrder mt-10">
-        <div className="totalPrice">
+      <div className={`${styles.MakeOrder} mt-10`}>
+        <div className={styles.totalPrice}>
           <p>610</p>
           <CurrencyIcon type="primary" />
         </div>

@@ -15,24 +15,25 @@
   overflow-y: scroll;
 }
 
-.constructor-element_pos_top,
-.constructor-element_pos_bottom {
-  margin-right: 27px;
-  width:528px;
-}
-
-.BurgerConstructorBlock{
+.BurgerConstructorBlock {
   display: flex;
   flex-direction: column;
   gap: 16px;
   width: 585px;
+  justify-content: center;
 }
 
-.drgagNdropBlock{
+.drgagNdropBlock {
   display: flex;
   gap: 8px;
 }
 
-.mTop{
+.mTop {
   margin-top: auto;
+}
+
+.r27 {
+  margin-right: 26.5px;
+  width: 528px;
+  margin-left: auto;
 }

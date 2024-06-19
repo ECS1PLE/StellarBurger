@@ -6,7 +6,7 @@
     padding-left: 320px;
     padding-right: 320px;
 
-    &-logo{
+    &Logo{
         position: absolute;
         top: 52%;
         left: 50%;
@@ -17,13 +17,14 @@
 
 .MenuItemContent{
     display: flex;
+    gap:8px;
 }
 
 .leftMenu{
     display: flex;
 }
 
-.not-active, .not-active>svg{
+.notActive, .notActive>svg{
     color:#8585AD;
     fill:#8585AD;
     stroke:#8585AD;

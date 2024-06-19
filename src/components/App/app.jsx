@@ -1,4 +1,4 @@
-import './app.scss'
+import styles from './app.module.scss'
 import Header from '../AppHeader/Header/header'
 import BuildBurger from '../AppMain/BuildBurger/BuildBurger'
 import BurgerConstructor from '../AppMain/BurgerConstructor/BurgerConstructor'

@@ -1,8 +1,8 @@
-import './MenuItem.scss'
+import styles from './MenuItem.module.scss'
 
 function MenuItem(props){
     return(
-        <div className='MenuItem'>
+        <div className={styles.MenuItem}>
             <p>{props.text}</p>
         </div>
     )

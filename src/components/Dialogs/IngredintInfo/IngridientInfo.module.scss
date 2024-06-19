@@ -27,7 +27,7 @@
   transform: translate(0%, -50%);
 }
 
-.modal-title > p {
+.modalTitle > p {
   color: #f2f2f3;
   font-family: "Jet Brains Mono";
   font-weight: 700;
@@ -35,22 +35,22 @@
   margin: 0;
 }
 
-.modal-title {
+.modalTitle {
   display: flex;
   gap: 229px;
 }
 
-.modal-title > svg {
+.modalTitle > svg {
   margin-top: auto;
   transition: 0.3s;
   margin-bottom: auto;
 }
 
-.modal-title > svg:hover {
+.modalTitle > svg:hover {
   cursor: pointer;
 }
 
-.modal-body {
+.modalBody {
   display: flex;
   margin-left: auto;
   margin-right: auto;
@@ -58,14 +58,14 @@
   width: fit-content;
 }
 
-.modal-body > img {
+.modalBody > img {
   width: 480px;
   height: 240px;
   margin-left: auto;
   margin-right: auto;
 }
 
-.modal-body > h3 {
+.modalBody > h3 {
   color: #f2f2f3;
   font-weight: 700;
   font-size: 24px;

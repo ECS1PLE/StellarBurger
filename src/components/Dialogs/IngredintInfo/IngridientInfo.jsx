@@ -1,21 +1,21 @@
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import "./IngridientInfo.scss";
+import styles from "./IngridientInfo.module.scss";
 import InfoBlock from "../InfoBlock/InfoBLock";
 
 const IngridientModal = (props) => {
   return (
     <>
-      <div className="backdrop" onClick={props.onClose}></div>
-      <div className="modal">
-        <div className="modal-title mt-10 ml-10 mr-10">
+      <div className={styles.backdrop} onClick={props.onClose}></div>
+      <div className={styles.modal}>
+        <div className={`${styles.modalTitle} mt-10 ml-10 mr-10`}>
           <p>Детали ингредиента</p>
           <CloseIcon type="primary" onClick={props.onClose} />
         </div>
-        <div className="modal-body mb-15">
+        <div className={`${styles.modalBody} mb-15`}>
           <img src={props.image}></img>
           <h3 className="mt-4 mb-8">{props.name}</h3>
-          <div className="infoIngredient flex">
+          <div className={`${styles.infoIngredient} ${styles.flex}`}>
             {Object.keys(props.info || {}).map((key, index) => (
               <InfoBlock key={index} {...props.info[key]} />
             ))}

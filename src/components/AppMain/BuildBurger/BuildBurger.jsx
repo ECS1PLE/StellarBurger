@@ -1,4 +1,4 @@
-import "./BuildBurger.scss";
+import styles from "./BuildBurger.module.scss";
 import CustomTab from "../CustomTab/CustomTab";
 import Ingredient from "../Ingredient/ingridient";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -45,20 +45,20 @@ const BuildBurger = () => {
           {...selectedDetail}
         />
       )}
-      <div className="BuildBurger">
-        <div className="topContentBuild">
+      <div className={styles.BuildBurger}>
+        <div className={styles.topContentBuild}>
           <h2>Соберите бургер</h2>
           <CustomTab />
         </div>
         {Object.keys(ingridientTypes).map((key) => (
-          <div className="bottomContentBuild" id={key} key={key}>
+          <div className={styles.bottomContentBuild} id={key} key={key}>
             <h2>{ingridientTypes[key]}</h2>
-            <div className="Bread pl-4 pr-4 pb-10">
+            <div className={`${styles.Bread} pl-4 pr-4 pb-10`}>
               {ingredients
                 .filter((item) => item.type == key)
                 .map((item) => (
                   <div
-                    className="IngredientBlock"
+                    className={styles.IngredientBlock}
                     key={item._id}
                     onClick={() => {
                       setShowModaL(true);
