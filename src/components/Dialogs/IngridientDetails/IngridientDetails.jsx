@@ -1,19 +1,20 @@
-import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import styles from "./IngridientInfo.module.scss";
+import styles from "./IngridientDetails.module.scss";
 import InfoBlock from "../InfoBlock/InfoBLock";
+import Overlay from "../ModalOverlay/ModalOverlay";
+import CloseModal from "../CloseIcon/CloseIcon";
+import ModalDialog from "../ModalDialog/ModalDialog";
 
-const IngridientModal = (props) => {
+const IngridientDetails = (props) => {
   return (
     <>
-      <div className={styles.backdrop} onClick={props.onClose}></div>
-      <div className={styles.modal}>
+      <ModalDialog onClose={props.onClose}>
         <div className={`${styles.modalTitle} mt-10 ml-10 mr-10`}>
           <p>Детали ингредиента</p>
-          <CloseIcon type="primary" onClick={props.onClose} />
+          {/* <CloseModal onClose={props.onClose} /> */}
         </div>
         <div className={`${styles.modalBody} mb-15`}>
-          <img src={props.image}></img>
+          <img src={props.image} alt="Фотография ингредиента"></img>
           <h3 className="mt-4 mb-8">{props.name}</h3>
           <div className={`${styles.infoIngredient} ${styles.flex}`}>
             {Object.keys(props.info || {}).map((key, index) => (
@@ -21,12 +22,12 @@ const IngridientModal = (props) => {
             ))}
           </div>
         </div>
-      </div>
+      </ModalDialog>
     </>
   );
 };
 
-IngridientModal.propTypes = {
+IngridientDetails.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   image: PropTypes.string,
@@ -52,4 +53,4 @@ IngridientModal.propTypes = {
   // imgSrc: PropTypes.string.isRequired,
 };
 
-export { IngridientModal };
+export { IngridientDetails };

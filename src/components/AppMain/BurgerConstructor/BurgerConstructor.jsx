@@ -8,7 +8,7 @@ import OrangeSauce from "/src/images/orangeSauce.png";
 import undeathMeat from "/src/images/undeathMeat.png";
 import falelianPlod from "/src/images/falelianPlod.png";
 import mineralRings from "/src/images/mineralRings.png";
-import Ingredient from "../Ingredient/ingridient";
+import Ingredient from "../Ingredient/Ingridient";
 
 const ingredients = [
   {

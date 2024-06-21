@@ -3,7 +3,7 @@ import {
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import OrderInfo from "../../Dialogs/OrderInfo/OrderInfo";
+import OrderDetails from "../../Dialogs/OrderDetails/OrderDetails";
 import { useState } from "react";
 
 const MakeOrder = () => {
@@ -11,7 +11,7 @@ const MakeOrder = () => {
   return (
     <>
       {showModal && (
-        <OrderInfo open={showModal} onClose={() => setShowModaL(false)} />
+        <OrderDetails open={showModal} onClose={() => setShowModaL(false)} />
       )}
       <div className={`${styles.MakeOrder} mt-10`}>
         <div className={styles.totalPrice}>

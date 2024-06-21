@@ -1,23 +1,22 @@
-import styles from './app.module.scss'
-import Header from '../AppHeader/Header/header'
-import BuildBurger from '../AppMain/BuildBurger/BuildBurger'
-import BurgerConstructor from '../AppMain/BurgerConstructor/BurgerConstructor'
-import MakeOrder from '../AppMain/MakeOrder/MakeOrder'
-
+import styles from "./App.module.scss";
+import Header from "../AppHeader/Header/header";
+import BurgerIngredients from "../AppMain/BurgerIngredients/BurgerIngredients";
+import BurgerConstructor from "../AppMain/BurgerConstructor/BurgerConstructor";
+import MakeOrder from "../AppMain/MakeOrder/MakeOrder";
 
 function App() {
   return (
     <>
       <Header />
-      <div className='main__content'>
-        <BuildBurger />
-        <div className='rightContent mt-25'>
+      <main className="main__content">
+        <BurgerIngredients />
+        <div className="rightContent mt-25">
           <BurgerConstructor />
           <MakeOrder />
         </div>
-      </div>
+      </main>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

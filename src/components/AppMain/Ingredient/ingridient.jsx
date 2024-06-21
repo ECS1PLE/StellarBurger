@@ -1,11 +1,11 @@
-import styles from "./ingredient.module.scss";
+import styles from "./Ingredient.module.scss";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 
 const Ingredient = (props) => {
   return (
     <div className={`${styles.Ingredient} pr-4 rl-4`}>
-      <img src={props.image} />
+      <img src={props.image} alt="Фотография ингредиента" />
       <div className={styles.cost}>
         <p>{props.price}</p>
         <CurrencyIcon type="primary" />
