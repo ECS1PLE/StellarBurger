@@ -4,7 +4,7 @@ import BurgerIngredients from "../AppMain/BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../AppMain/BurgerConstructor/BurgerConstructor";
 import MakeOrder from "../AppMain/MakeOrder/MakeOrder";
 
-function App() {
+const App = () => {
   return (
     <>
       <Header />
@@ -17,6 +17,6 @@ function App() {
       </main>
     </>
   );
-}
+};
 
 export default App;
