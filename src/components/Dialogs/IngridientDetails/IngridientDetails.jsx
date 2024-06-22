@@ -8,8 +8,8 @@ import { Children } from "react";
 
 const IngridientDetails = (props) => {
   return (
-    <>
-      <ModalDialog onClose={props.onClose}>
+    <ModalDialog onClose={props.onClose}>
+      <>
         <div className={`${styles.modalTitle} mt-10 ml-10 mr-10`}>
           <p>Детали ингредиента</p>
           {/* <CloseModal onClose={props.onClose} /> */}
@@ -23,8 +23,8 @@ const IngridientDetails = (props) => {
             ))}
           </div>
         </div>
-      </ModalDialog>
-    </>
+      </>
+    </ModalDialog>
   );
 };
 

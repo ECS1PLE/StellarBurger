@@ -4,8 +4,8 @@ import ModalDialog from "../ModalDialog/ModalDialog";
 
 const OrderDetails = (props) => {
   return (
-    <>
-      <ModalDialog onClose={props.onClose}>
+    <ModalDialog onClose={props.onClose}>
+      <>
         <div className={`${styles.mainConent} mt-30 mb-30 ml-25 mr-25`}>
           <div className={styles.id__order}>
             <h2>034536</h2>
@@ -21,8 +21,8 @@ const OrderDetails = (props) => {
             <p>Дождитесь готовности на орбитальной станции</p>
           </div>
         </div>
-      </ModalDialog>
-    </>
+      </>
+    </ModalDialog>
   );
 };
 

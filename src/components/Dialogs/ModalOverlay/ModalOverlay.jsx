@@ -6,7 +6,9 @@ const Overlay = (props) => {
   useEffect(() => {
     const close = (event) => {
       if (event.key === "Escape") {
-        props.onClose();
+        if (props?.onClose) {
+          props.onClose();
+        }
       }
     };
     window.addEventListener("keydown", close);
