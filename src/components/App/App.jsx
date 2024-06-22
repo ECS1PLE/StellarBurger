@@ -1,5 +1,5 @@
 import styles from "./App.module.scss";
-import Header from "../AppHeader/Header/header";
+import Header from "../AppHeader/Header/Header";
 import BurgerIngredients from "../AppMain/BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../AppMain/BurgerConstructor/BurgerConstructor";
 import MakeOrder from "../AppMain/MakeOrder/MakeOrder";
@@ -8,7 +8,7 @@ const App = () => {
   return (
     <>
       <Header />
-      <main className="main__content">
+      <main className={styles.main__content}>
         <BurgerIngredients />
         <div className="rightContent mt-25">
           <BurgerConstructor />

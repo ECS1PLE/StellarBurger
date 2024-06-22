@@ -4,6 +4,7 @@ import InfoBlock from "../InfoBlock/InfoBLock";
 import Overlay from "../ModalOverlay/ModalOverlay";
 import CloseModal from "../CloseIcon/CloseIcon";
 import ModalDialog from "../ModalDialog/ModalDialog";
+import { Children } from "react";
 
 const IngridientDetails = (props) => {
   return (

@@ -7,11 +7,11 @@ import OrderDetails from "../../Dialogs/OrderDetails/OrderDetails";
 import { useState } from "react";
 
 const MakeOrder = () => {
-  const [showModal, setShowModaL] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      {showModal && (
-        <OrderDetails open={showModal} onClose={() => setShowModaL(false)} />
+      {isOpen && (
+        <OrderDetails open={isOpen} onClose={() => setIsOpen(false)} />
       )}
       <div className={`${styles.MakeOrder} mt-10`}>
         <div className={styles.totalPrice}>
@@ -22,7 +22,7 @@ const MakeOrder = () => {
           htmlType="button"
           type="primary"
           size="large"
-          onClick={() => setShowModaL(true)}
+          onClick={() => setIsOpen(true)}
         >
           Оформить заказ
         </Button>

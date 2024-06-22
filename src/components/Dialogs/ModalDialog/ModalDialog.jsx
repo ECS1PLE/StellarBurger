@@ -20,7 +20,7 @@ const ModalDialog = (props) => {
 };
 
 ModalDialog.propTypes = {
-  children: PropTypes.array.isRequired,
+  children: PropTypes.node.isRequired,
   onClose: PropTypes.func,
 };
 

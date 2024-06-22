@@ -4,8 +4,8 @@ import { useEffect } from "react";
 
 const Overlay = (props) => {
   useEffect(() => {
-    const close = (e) => {
-      if (e.keyCode === 27) {
+    const close = (event) => {
+      if (event.key === "Escape") {
         props.onClose();
       }
     };

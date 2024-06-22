@@ -4,7 +4,7 @@ import {
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./header.module.scss";
+import styles from "./Header.module.scss";
 import MenuItem from "../MenuItem/MenuItem";
 
 const Header = () => {
