@@ -4,6 +4,7 @@ import Ingredient from "../Ingredient/Ingridient";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect, useState } from "react";
 import { IngridientDetails } from "../../Dialogs/IngridientDetails/IngridientDetails";
+import ModalDialog from "../../Dialogs/ModalDialog/ModalDialog";
 
 const detailKeys = {
   calories: "Калории,ккал",
@@ -19,7 +20,7 @@ const ingridientTypes = {
 };
 
 const BuildBurger = () => {
-  const [showModal, setShowModaL] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [selectedDetail, setSelectedDetail] = useState({});
 
   const [ingredients, setIngredients] = useState([]);
@@ -51,12 +52,10 @@ const BuildBurger = () => {
 
   return (
     <>
-      {showModal && (
-        <IngridientDetails
-          open={showModal}
-          onClose={() => setShowModaL(false)}
-          {...selectedDetail}
-        />
+      {isOpen && (
+        <ModalDialog open={isOpen} onClose={() => setIsOpen(false)}>
+          <IngridientDetails {...selectedDetail} />
+        </ModalDialog>
       )}
       <div className={styles.BuildBurger}>
         <div className={styles.topContentBuild}>
@@ -75,7 +74,7 @@ const BuildBurger = () => {
                       className={styles.IngredientBlock}
                       key={item._id}
                       onClick={() => {
-                        setShowModaL(true);
+                        setIsOpen(true);
                         setSelectedDetail({
                           image: item.image,
                           name: item.name,

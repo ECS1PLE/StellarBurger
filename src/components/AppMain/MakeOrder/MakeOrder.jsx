@@ -5,13 +5,16 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import OrderDetails from "../../Dialogs/OrderDetails/OrderDetails";
 import { useState } from "react";
+import ModalDialog from "../../Dialogs/ModalDialog/ModalDialog";
 
 const MakeOrder = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
       {isOpen && (
-        <OrderDetails open={isOpen} onClose={() => setIsOpen(false)} />
+        <ModalDialog open={isOpen} onClose={() => setIsOpen(false)}>
+          <OrderDetails />
+        </ModalDialog>
       )}
       <div className={`${styles.MakeOrder} mt-10`}>
         <div className={styles.totalPrice}>
@@ -32,3 +35,8 @@ const MakeOrder = () => {
 };
 
 export default MakeOrder;
+
+// MakeOrder.propTypes = {
+//   // onClose: PropTypes.func.isRequired,
+//   // imgSrc: PropTypes.string.isRequired,
+// };

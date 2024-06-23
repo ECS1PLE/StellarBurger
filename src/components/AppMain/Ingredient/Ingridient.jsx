@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 const Ingredient = (props) => {
   return (
     <div className={`${styles.Ingredient} pr-4 rl-4`}>
-      <img src={props.image} alt="Фотография ингредиента" />
+      <img src={props.image} alt={props.name} />
       <div className={styles.cost}>
         <p>{props.price}</p>
         <CurrencyIcon type="primary" />
