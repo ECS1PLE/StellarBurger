@@ -23,17 +23,38 @@
   justify-content: center;
 }
 
+.mTop {
+  margin-top: auto;
+}
+
 .drgagNdropBlock {
   display: flex;
   gap: 8px;
 }
 
-.mTop {
-  margin-top: auto;
-}
-
 .r27 {
-  margin-right: 26.5px;
+  margin-right: 17.5px;
   width: 528px;
   margin-left: auto;
+}
+
+.Uncorrect__bun {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.Uncorrect__bun > h2 {
+  width: fit-content;
+  color: white;
+  margin-left: auto;
+  margin-right: auto;
+  height: 0;
+  font-family: "Jet Brains Mono";
+}
+
+.OnDragOver {
+  background-color: red !important;
 }

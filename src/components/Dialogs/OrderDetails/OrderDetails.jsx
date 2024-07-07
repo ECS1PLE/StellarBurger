@@ -1,11 +1,16 @@
 import styles from "./OrderDetails.module.scss";
+import { useSelector } from "react-redux";
 
-const OrderDetails = (props) => {
+const OrderDetails = () => {
+  const orderNumber = useSelector(
+    (state) => state.OrderSlice.order?.order?.number || ""
+  );
+
   return (
     <>
       <div className={`${styles.mainConent} mt-30 mb-30 ml-25 mr-25`}>
         <div className={styles.id__order}>
-          <h2>034536</h2>
+          <h2>{orderNumber}</h2>
           <h3 className="mt-8">идентификатор заказа</h3>
         </div>
         <img

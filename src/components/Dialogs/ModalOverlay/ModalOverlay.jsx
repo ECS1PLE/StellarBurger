@@ -20,5 +20,5 @@ const Overlay = (props) => {
 export default Overlay;
 
 Overlay.propTypes = {
-  onClose: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
 };
