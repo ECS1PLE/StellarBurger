@@ -1,0 +1,24 @@
+.totalPrice > p {
+  font-size: 48px;
+  font-family: "Iceland";
+  margin: 0;
+}
+
+.totalPrice > svg {
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 36px;
+  height: 36px;
+}
+
+.totalPrice {
+  display: flex;
+  gap: 8px;
+}
+
+.MakeOrder {
+  margin-left: auto;
+  display: flex;
+  width: fit-content;
+  gap: 40px;
+}

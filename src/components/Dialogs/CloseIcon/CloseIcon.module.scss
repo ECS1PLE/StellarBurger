@@ -1,0 +1,20 @@
+.IconRight > svg {
+  top: 60px;
+  right: 40px;
+  left: auto;
+  position: absolute;
+}
+
+.IconRight {
+  position: relative;
+  transition: 0.3s;
+}
+
+.IconRight:hover {
+  cursor: pointer;
+}
+
+.IconRight > svg {
+  width: 18px;
+  height: 18px;
+}
