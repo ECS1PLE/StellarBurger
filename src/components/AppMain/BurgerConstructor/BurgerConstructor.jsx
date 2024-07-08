@@ -30,46 +30,71 @@ const BurgerConstructor = () => {
       const bunsInCart = orderItems.filter(
         ({ ingridientType }) => ingridientType == "bun"
       );
-      if (bunsInCart?.length > 1) {
-        setBunError("В заказ нельзя добавить более двух булок");
-        return;
-      } else if (
-        bunsInCart?.length == 1 &&
-        !bunsInCart.find(({ id }) => id == item._id)
-      ) {
-        setBunError("В заказ нельзя добавить разные булки");
+      if (bunsInCart?.length > 0) {
+        setBunError("В заказ уже добавлена булка");
         return;
       }
+
+      if (
+        item.balance -
+          orderItems.filter((orderItem) => orderItem.id == item._id).length <=
+        0
+      ) {
+        setBunError("Ингридиент закончился");
+        return;
+      }
+
+      dispatcher(
+        addToOrder({
+          orderItemId: uuidv4(),
+          orderItemNo: (orderItems.length + 1) * 1000,
+          id: item._id,
+          ingridientType: "bun",
+          text: item.name + (item.type === "top" ? " (низ)" : " (верх)"),
+          thumbnail: item.image,
+          price: item.price,
+          type: "top",
+          isLocked: true,
+        })
+      );
+
+      dispatcher(
+        addToOrder({
+          orderItemId: uuidv4(),
+          orderItemNo: (orderItems.length + 1) * 1000,
+          id: item._id,
+          ingridientType: "bun",
+          text: item.name + (item.type === "top" ? " (верх)" : " (низ)"),
+          thumbnail: item.image,
+          price: item.price,
+          type: "bottom",
+          isLocked: true,
+        })
+      );
+    } else {
+      if (
+        item.balance -
+          orderItems.filter((orderItem) => orderItem.id == item._id).length <=
+        0
+      ) {
+        setBunError("Ингридиент закончился");
+        return;
+      }
+
+      dispatcher(
+        addToOrder({
+          orderItemId: uuidv4(),
+          orderItemNo: (orderItems.length + 1) * 1000,
+          id: item._id,
+          ingridientType: item.type,
+          text: item.name,
+          thumbnail: item.image,
+          price: item.price,
+          type: "",
+          isLocked: false,
+        })
+      );
     }
-
-    if (
-      item.balance -
-        orderItems.filter((orderItem) => orderItem.id == item._id).length <=
-      0
-    ) {
-      setBunError("Ингридиент закончился");
-      return;
-    }
-
-    const bunPosition = orderItems.find(
-      (orderItem) => orderItem.ingridientType === "bun"
-    )
-      ? "bottom"
-      : "top";
-
-    dispatcher(
-      addToOrder({
-        orderItemId: uuidv4(),
-        orderItemNo: (orderItems.length + 1) * 1000,
-        id: item._id,
-        ingridientType: item.type,
-        text: item.name,
-        thumbnail: item.image,
-        price: item.price,
-        type: item.type === "bun" ? bunPosition : "",
-        isLocked: item.type === "bun",
-      })
-    );
   };
   const [{ isOver }, dropRef] = useDrop(
     () => ({
@@ -93,6 +118,8 @@ const BurgerConstructor = () => {
     [onDropNewIngridient, orderItems]
   );
 
+  console.log(orderItems.length);
+
   return (
     <>
       {bunError?.length > 0 && (
@@ -100,6 +127,11 @@ const BurgerConstructor = () => {
           <div>{bunError}</div>
         </ModalDialog>
       )}
+
+      {/* <h2 className={styles.IngredintCounter}>
+        Всего в заказе {orderItems.length} ингридиентов
+      </h2> */}
+
       <div
         className={`${styles.BurgerConstructorBlock} ${
           isOver ? styles.BurgerConstructorBlock : ""
@@ -122,27 +154,7 @@ const BurgerConstructor = () => {
                     item.ingridientType === structureItem.ingridientType)
               )
               .map((item) => (
-                <ConstuctorBlock
-                  key={`${structureItem.type} ${item.orderItemId}`}
-                  item={item}
-                />
-                // <div
-                //   ref={dragSource}
-                //   className={
-                //     item.isLocked ? styles.r27 : styles.drgagNdropBlock
-                //   }
-                //   key={`${structureItem.type} ${item._id} ${index}`}
-                //   draggable={true}
-                // >
-                //   {!item.isLocked && <DragIcon type="primary" />}
-                //   <ConstructorElement
-                //     key={1}
-                //     {...item}
-                //     handleClose={() =>
-                //       dispatcher(removeFromOrder(item.orderItemId))
-                //     }
-                //   />
-                // </div>
+                <ConstuctorBlock key={`${item.orderItemId}`} item={item} />
               ))}
           </div>
         ))}

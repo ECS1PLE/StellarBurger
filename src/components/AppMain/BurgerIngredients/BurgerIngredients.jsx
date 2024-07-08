@@ -6,8 +6,9 @@ import { useEffect, useState } from "react";
 import { IngridientDetails } from "../../Dialogs/IngridientDetails/IngridientDetails";
 import ModalDialog from "../../Dialogs/ModalDialog/ModalDialog";
 import { useDispatch, useSelector } from "react-redux";
-import { loadIngridients } from "../../../services/reducers/BurgerIngredientsSlice";
+import { resetError } from "../../../services/reducers/BurgerIngredientsSlice";
 import { useInView } from "react-intersection-observer";
+import { ingridientsThunk } from "../../../services/actions/IngridientsThunk";
 
 const ingridientTypes = {
   bun: "Булки",
@@ -36,11 +37,15 @@ const BuildBurger = () => {
     main: refMain,
   };
 
+  const orderItems = useSelector((state) => state.OrderSlice.orderItems);
+
   const ingredients = useSelector(
     (state) => state.burgerIngredients.ingredients
   );
 
-  const orderItems = useSelector((state) => state.OrderSlice.orderItems);
+  const loadingError = useSelector(
+    (state) => state.burgerIngredients.ingredientsError
+  );
 
   const dispatcher = useDispatch();
 
@@ -54,37 +59,19 @@ const BuildBurger = () => {
     }
   }, [inViewBun, inVuewSauce, inViewMain]);
 
-  //const [ingredients, setIngredients] = useState([]);
-
   useEffect(() => {
-    const fetchData = async () => {
-      fetch(`${import.meta.env.VITE_API_URL}/ingredients`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Ошибка сервера");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          dispatcher(
-            loadIngridients(
-              data?.data?.map((item) => ({ ...item, balance: item.price }))
-            )
-          );
-        })
-        .catch((error) => {
-          console.error("Ошибка: ", error);
-        });
-    };
     if (!ingredients?.length) {
-      //console.log(state);
-
-      fetchData();
+      dispatcher(ingridientsThunk());
     }
-  }, [dispatcher, ingredients]);
+  }, [ingredients, dispatcher]);
 
   return (
     <>
+      {loadingError?.length > 0 && (
+        <ModalDialog onClose={() => dispatcher(resetError())}>
+          <div>{loadingError}</div>
+        </ModalDialog>
+      )}
       {isOpen && (
         <ModalDialog open={isOpen} onClose={() => setIsOpen(false)}>
           <IngridientDetails id={selectedDetail} />

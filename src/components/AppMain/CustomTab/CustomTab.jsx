@@ -42,8 +42,8 @@ const CustomTab = ({ active = "bun", setActive }) => {
 };
 
 CustomTab.propTypes = {
-  active: PropTypes.string,
-  setActive: PropTypes.func,
+  active: PropTypes.string.isRequired,
+  setActive: PropTypes.func.isRequired,
 };
 
 export default CustomTab;
