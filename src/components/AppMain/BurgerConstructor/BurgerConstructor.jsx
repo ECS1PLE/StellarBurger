@@ -92,6 +92,7 @@ const BurgerConstructor = () => {
           price: item.price,
           type: "",
           isLocked: false,
+          count: 1,
         })
       );
     }
@@ -154,7 +155,9 @@ const BurgerConstructor = () => {
                     item.ingridientType === structureItem.ingridientType)
               )
               .map((item) => (
-                <ConstuctorBlock key={`${item.orderItemId}`} item={item} />
+                <div key={`${item.orderItemId}`}>
+                  <ConstuctorBlock item={item} />
+                </div>
               ))}
           </div>
         ))}

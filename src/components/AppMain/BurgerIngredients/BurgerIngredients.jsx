@@ -106,9 +106,12 @@ const BuildBurger = () => {
                       <Counter
                         count={
                           item.balance -
-                          orderItems.filter(
-                            (orderItem) => orderItem.id == item._id
-                          ).length
+                          orderItems.reduce((acc, orderItem) => {
+                            if (orderItem.id == item._id) {
+                              acc += orderItem.count;
+                            }
+                            return acc;
+                          }, 0)
                         }
                         size="default"
                         extraClass="m-1"

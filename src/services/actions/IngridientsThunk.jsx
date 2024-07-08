@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const ingridientsThunk = createAsyncThunk(
   "burgerIngredients/loadList",
-  async (orderItems, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/ingredients`

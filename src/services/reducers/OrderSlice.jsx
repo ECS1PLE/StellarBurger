@@ -1,16 +1,26 @@
 import { createSlice, current } from "@reduxjs/toolkit";
+import { makeOrderThunk } from "../actions/MakeOrderThunk";
 
 const initialState = {
   orderItems: [],
   order: {},
+  orderLoading: false,
+  orderError: "",
 };
 
 export const OrderSlice = createSlice({
-  name: "burgerIngredients",
+  name: "order",
   initialState,
   reducers: {
     addToOrder: (state, action) => {
-      state.orderItems = [...state.orderItems, action.payload];
+      const oldItem = state.orderItems.find(
+        (item) => item.id == action.payload["id"]
+      );
+      if (oldItem) {
+        oldItem["count"]++;
+      } else {
+        state.orderItems = [...state.orderItems, action.payload];
+      }
     },
     removeFromOrder: (state, action) => {
       state.orderItems = state.orderItems.filter(
@@ -25,9 +35,6 @@ export const OrderSlice = createSlice({
       const to = currentState.find(
         (item) => item.orderItemId == action.payload["to"]?.orderItemId
       );
-      console.log(action.payload["from"]);
-      console.log("TO");
-      console.log(action.payload["to"]);
 
       state.orderItems = [
         ...state.orderItems.map((item) =>
@@ -47,6 +54,28 @@ export const OrderSlice = createSlice({
       state.orderItems = [];
       state.order = {};
     },
+    resetOrderError: (state) => {
+      state.orderError = "";
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(makeOrderThunk.pending, (state) => {
+        state.orderLoading = true;
+      })
+      .addCase(makeOrderThunk.fulfilled, (state, action) => {
+        state.orderLoading = false;
+        state.order = { ...action.payload };
+        // state.ingredientsLoading = false;
+        // state.ingredients = action.payload?.map((item) => ({
+        //   ...item,
+        //   balance: item.price,
+        // }));
+      })
+      .addCase(makeOrderThunk.rejected, (state, action) => {
+        state.orderLoading = false;
+        state.orderError = action.payload;
+      });
   },
 });
 
@@ -57,6 +86,7 @@ export const {
   clearOrder,
   removeFromOrder,
   moveItem,
+  resetOrderError,
 } = OrderSlice.actions;
 
 export default OrderSlice.reducer;

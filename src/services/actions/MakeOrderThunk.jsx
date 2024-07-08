@@ -1,34 +1,41 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { loadIngridients } from "../reducers/BurgerIngredientsSlice";
 
-export const postOrder = createAsyncThunk(
-  "orders/postOrder",
-  async (orderItems, { dispatch }) => {
+const makeOrderThunk = createAsyncThunk(
+  "order/make",
+  async (_, { rejectWithValue, getState }) => {
+    const state = getState();
     try {
+      const ingridients = state.OrderSlice.orderItems.reduce((prev, cur) => {
+        if (cur.count === 1) {
+          prev.push(cur.id);
+        } else if (cur.count > 1) {
+          for (let i = 0; i < cur.count; i++) {
+            prev.push(cur.id);
+          }
+        }
+        return prev;
+      }, []);
       const response = await fetch(`${import.meta.env.VITE_API_URL}/orders`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ingredients: orderItems.map((item) => item.id),
+          ingredients: ingridients,
         }),
       });
       if (!response.ok) {
-        const errorData = await response.json();
-        return errorData;
+        throw new Error("Ошибка получения данных");
       }
 
       const data = await response.json();
 
-      if (data.success) {
-        dispatch(loadIngridients(data));
-        return data;
-      } else {
-        return { error: "Ошибка при размещении заказа" };
+      if (!data?.["success"]) {
+        throw new Error("Ошибка получения данных");
       }
+      return data;
     } catch (error) {
-      return { error: error.message };
+      return rejectWithValue(error.message);
     }
   }
 );
 
-export default postOrder;
+export { makeOrderThunk };

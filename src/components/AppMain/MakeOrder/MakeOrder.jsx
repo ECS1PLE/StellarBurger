@@ -4,52 +4,48 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import OrderDetails from "../../Dialogs/OrderDetails/OrderDetails";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ModalDialog from "../../Dialogs/ModalDialog/ModalDialog";
 import { useSelector } from "react-redux";
 // import { useReducer } from "react";
 import { useDispatch } from "react-redux";
-import { makeOrder } from "../../../services/reducers/OrderSlice";
-import { clearOrder } from "../../../services/reducers/OrderSlice";
+import {
+  clearOrder,
+  resetOrderError,
+} from "../../../services/reducers/OrderSlice";
+import { makeOrderThunk } from "../../../services/actions/MakeOrderThunk";
 
 const MakeOrder = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const orderItems = useSelector((state) => state.OrderSlice.orderItems);
 
   const dispatcher = useDispatch();
 
-  const handleOrder = async () => {
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/orders`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ingredients: orderItems.map((item) => item.id),
-        }),
-      });
+  const orderItems = useSelector((state) => state.OrderSlice.orderItems);
+  const orderError = useSelector((state) => state.OrderSlice.orderError);
+  const orderNumber = useSelector(
+    (state) => state.OrderSlice.order?.order?.number
+  );
 
-      if (!response.ok) {
-        console.log("Ошибка");
-      }
-
-      const data = await response.json();
-
-      if (data.success) {
-        console.log("making orcder");
-        dispatcher(makeOrder(data));
-        setIsOpen(true);
-        //
-      } else {
-        console.log("ошибка");
-      }
-    } catch (error) {
-      console.error("Ошибка: ", error);
+  const handleOrder = () => {
+    if (orderItems?.length) {
+      dispatcher(makeOrderThunk());
     }
   };
 
+  useEffect(() => {
+    if (orderNumber) {
+      setIsOpen(true);
+    }
+  }, [orderNumber]);
+
   return (
     <>
-      {isOpen && (
+      {orderError?.length > 0 && (
+        <ModalDialog onClose={() => dispatcher(resetOrderError())}>
+          <div>{orderError}</div>
+        </ModalDialog>
+      )}
+      {isOpen && !orderError && (
         <ModalDialog
           open={isOpen}
           onClose={() => {
@@ -62,7 +58,9 @@ const MakeOrder = () => {
       )}
       <div className={`${styles.MakeOrder} mt-10`}>
         <div className={styles.totalPrice}>
-          <p>{orderItems.reduce((acc, curr) => acc + curr.price, 0)}</p>
+          <p>
+            {orderItems.reduce((acc, curr) => acc + curr.count * curr.price, 0)}
+          </p>
           <CurrencyIcon type="primary" />
         </div>
         <Button
