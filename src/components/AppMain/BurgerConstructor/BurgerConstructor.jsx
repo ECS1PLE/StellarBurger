@@ -92,7 +92,6 @@ const BurgerConstructor = () => {
           price: item.price,
           type: "",
           isLocked: false,
-          count: 1,
         })
       );
     }
@@ -105,9 +104,6 @@ const BurgerConstructor = () => {
           case "Ingridient":
             onDropNewIngridient(item);
             break;
-          case "ConstructorElement":
-            //console.log("dsafdsfsdf");
-            break;
         }
         return undefined;
       },
@@ -118,8 +114,6 @@ const BurgerConstructor = () => {
     }),
     [onDropNewIngridient, orderItems]
   );
-
-  console.log(orderItems.length);
 
   return (
     <>

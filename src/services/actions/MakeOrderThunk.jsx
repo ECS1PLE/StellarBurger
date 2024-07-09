@@ -1,20 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { checkResponce } from "../utils/CheckResponse.js";
 
 const makeOrderThunk = createAsyncThunk(
   "order/make",
   async (_, { rejectWithValue, getState }) => {
     const state = getState();
     try {
-      const ingridients = state.OrderSlice.orderItems.reduce((prev, cur) => {
-        if (cur.count === 1) {
-          prev.push(cur.id);
-        } else if (cur.count > 1) {
-          for (let i = 0; i < cur.count; i++) {
-            prev.push(cur.id);
-          }
-        }
-        return prev;
-      }, []);
+      const ingridients = state.OrderSlice.orderItems.map(({ id }) => id);
       const response = await fetch(`${import.meta.env.VITE_API_URL}/orders`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -22,16 +14,7 @@ const makeOrderThunk = createAsyncThunk(
           ingredients: ingridients,
         }),
       });
-      if (!response.ok) {
-        throw new Error("Ошибка получения данных");
-      }
-
-      const data = await response.json();
-
-      if (!data?.["success"]) {
-        throw new Error("Ошибка получения данных");
-      }
-      return data;
+      return await checkResponce(response);
     } catch (error) {
       return rejectWithValue(error.message);
     }

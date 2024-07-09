@@ -13,14 +13,7 @@ export const OrderSlice = createSlice({
   initialState,
   reducers: {
     addToOrder: (state, action) => {
-      const oldItem = state.orderItems.find(
-        (item) => item.id == action.payload["id"]
-      );
-      if (oldItem) {
-        oldItem["count"]++;
-      } else {
-        state.orderItems = [...state.orderItems, action.payload];
-      }
+      state.orderItems = [...state.orderItems, action.payload];
     },
     removeFromOrder: (state, action) => {
       state.orderItems = state.orderItems.filter(

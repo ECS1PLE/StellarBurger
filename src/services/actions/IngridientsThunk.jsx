@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { checkResponce } from "../utils/CheckResponse.js";
 
 const ingridientsThunk = createAsyncThunk(
   "burgerIngredients/loadList",
@@ -7,14 +8,7 @@ const ingridientsThunk = createAsyncThunk(
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/ingredients`
       );
-      if (!response.ok) {
-        throw new Error("Ошибка получения данных");
-      }
-      const data = await response.json();
-      if (!data?.["success"]) {
-        throw new Error("Ошибка получения данных");
-      }
-      return data?.data;
+      return (await checkResponce(response))?.data;
     } catch (error) {
       return rejectWithValue(error.message);
     }

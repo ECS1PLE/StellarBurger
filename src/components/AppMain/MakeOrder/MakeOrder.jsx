@@ -58,9 +58,7 @@ const MakeOrder = () => {
       )}
       <div className={`${styles.MakeOrder} mt-10`}>
         <div className={styles.totalPrice}>
-          <p>
-            {orderItems.reduce((acc, curr) => acc + curr.count * curr.price, 0)}
-          </p>
+          <p>{orderItems.reduce((acc, curr) => (acc += curr.price), 0)}</p>
           <CurrencyIcon type="primary" />
         </div>
         <Button

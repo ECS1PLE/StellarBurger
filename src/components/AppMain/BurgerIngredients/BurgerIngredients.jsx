@@ -92,7 +92,7 @@ const BuildBurger = () => {
             >
               <h2>{ingridientTypes[key]}</h2>
               <div className={`${styles.Bread} pl-4 pr-4 pb-10`}>
-                {ingredients
+                {(ingredients || [])
                   .filter((item) => item.type == key)
                   .map((item) => (
                     <div
@@ -104,15 +104,12 @@ const BuildBurger = () => {
                       }}
                     >
                       <Counter
-                        count={
-                          item.balance -
-                          orderItems.reduce((acc, orderItem) => {
-                            if (orderItem.id == item._id) {
-                              acc += orderItem.count;
-                            }
-                            return acc;
-                          }, 0)
-                        }
+                        count={orderItems.reduce((acc, orderItem) => {
+                          if (orderItem.id == item._id) {
+                            acc++;
+                          }
+                          return acc;
+                        }, 0)}
                         size="default"
                         extraClass="m-1"
                       />

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./ConstuctorBlock.module.scss";
 import {
   ConstructorElement,
-  Counter,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import {
@@ -70,7 +69,6 @@ const ConstuctorBlock = ({ item }) => {
           {...item}
           handleClose={() => dispatcher(removeFromOrder(item.orderItemId))}
         />
-        <Counter count={item.count} size="default" extraClass="m-1"></Counter>
       </div>
     </div>
   );
