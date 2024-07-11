@@ -13,6 +13,6 @@ const CloseModal = (props) => {
 export default CloseModal;
 
 CloseModal.propTypes = {
-  onClose: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
   addClass: PropTypes.string,
 };

@@ -5,13 +5,10 @@ import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect, useState } from "react";
 import { IngridientDetails } from "../../Dialogs/IngridientDetails/IngridientDetails";
 import ModalDialog from "../../Dialogs/ModalDialog/ModalDialog";
-
-const detailKeys = {
-  calories: "Калории,ккал",
-  proteins: "Белки, г",
-  fat: "Жиры, г",
-  carbohydrates: "Углеводы, г",
-};
+import { useDispatch, useSelector } from "react-redux";
+import { resetError } from "../../../services/reducers/BurgerIngredientsSlice";
+import { useInView } from "react-intersection-observer";
+import { ingridientsThunk } from "../../../services/actions/IngridientsThunk";
 
 const ingridientTypes = {
   bun: "Булки",
@@ -21,83 +18,101 @@ const ingridientTypes = {
 
 const BuildBurger = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedDetail, setSelectedDetail] = useState({});
+  const [activeTab, setActiveTab] = useState("one");
+  const [selectedDetail, setSelectedDetail] = useState("");
 
-  const [ingredients, setIngredients] = useState([]);
+  const { ref: refBun, inView: inViewBun } = useInView({
+    threshold: 0.2,
+  });
+  const { ref: refSauce, inView: inVuewSauce } = useInView({
+    threshold: 0.2,
+  });
+  const { ref: refMain, inView: inViewMain } = useInView({
+    threshold: 0.2,
+  });
+
+  const refs = {
+    bun: refBun,
+    sauce: refSauce,
+    main: refMain,
+  };
+
+  const orderItems = useSelector((state) => state.OrderSlice.orderItems);
+
+  const ingredients = useSelector(
+    (state) => state.burgerIngredients.ingredients
+  );
+
+  const loadingError = useSelector(
+    (state) => state.burgerIngredients.ingredientsError
+  );
+
+  const dispatcher = useDispatch();
 
   useEffect(() => {
-    const fetchData = async () => {
-      // fetch("https://norma.nomoreparties.space/api/ingredients")
-      //   .then((response) => response.json())
-      //   .then((data) => {
-      //     setIngredients(data.data);
-      //   })
-      //   .catch((error) => console.error("Ошибка: ", error));
-      fetch("https://norma.nomoreparties.space/api/ingredients")
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Ошибка сервера");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setIngredients(data.data);
-        })
-        .catch((error) => {
-          console.error("Ошибка: ", error);
-        });
-    };
-    fetchData();
-  }, []);
+    if (inViewBun) {
+      setActiveTab("bun");
+    } else if (inVuewSauce) {
+      setActiveTab("sauce");
+    } else if (inViewMain) {
+      setActiveTab("main");
+    }
+  }, [inViewBun, inVuewSauce, inViewMain]);
+
+  useEffect(() => {
+    if (!ingredients?.length) {
+      dispatcher(ingridientsThunk());
+    }
+  }, [ingredients, dispatcher]);
 
   return (
     <>
+      {loadingError?.length > 0 && (
+        <ModalDialog onClose={() => dispatcher(resetError())}>
+          <div>{loadingError}</div>
+        </ModalDialog>
+      )}
       {isOpen && (
         <ModalDialog open={isOpen} onClose={() => setIsOpen(false)}>
-          <IngridientDetails {...selectedDetail} />
+          <IngridientDetails id={selectedDetail} />
         </ModalDialog>
       )}
       <div className={styles.BuildBurger}>
         <div className={styles.topContentBuild}>
           <h2>Соберите бургер</h2>
-          <CustomTab />
+          <CustomTab active={activeTab} setActive={setActiveTab} />
         </div>
         <div className={styles.mainIngridientsBlock}>
           {Object.keys(ingridientTypes).map((key) => (
-            <div className={styles.bottomContentBuild} id={key} key={key}>
+            <div
+              className={styles.bottomContentBuild}
+              id={key}
+              key={key}
+              ref={refs[key]}
+            >
               <h2>{ingridientTypes[key]}</h2>
               <div className={`${styles.Bread} pl-4 pr-4 pb-10`}>
-                {ingredients
+                {(ingredients || [])
                   .filter((item) => item.type == key)
                   .map((item) => (
                     <div
                       className={styles.IngredientBlock}
                       key={item._id}
                       onClick={() => {
+                        setSelectedDetail(item._id);
                         setIsOpen(true);
-                        setSelectedDetail({
-                          image: item.image,
-                          name: item.name,
-                          info: Object.keys(detailKeys).reduce((prev, cur) => {
-                            if (!prev) {
-                              prev = {};
-                            }
-                            prev[cur] = {
-                              name: detailKeys[cur],
-                              value: item?.[cur] || 0,
-                            };
-                            return { ...prev };
-                          }, {}),
-                        });
                       }}
                     >
-                      {"price" in item && (
-                        <Counter
-                          count={item.price}
-                          size="default"
-                          extraClass="m-1"
-                        />
-                      )}
+                      <Counter
+                        count={orderItems.reduce((acc, orderItem) => {
+                          if (orderItem.id == item._id) {
+                            acc++;
+                          }
+                          return acc;
+                        }, 0)}
+                        size="default"
+                        extraClass="m-1"
+                      />
                       <Ingredient {...item} />
                     </div>
                   ))}
