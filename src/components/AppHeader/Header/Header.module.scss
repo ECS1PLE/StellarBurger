@@ -46,3 +46,14 @@
 .rightMenu {
   display: flex;
 }
+
+a {
+  text-decoration: none;
+}
+
+.Active,
+.Active > svg {
+  color: #f2f2f3;
+  fill: #f2f2f3;
+  stroke: #f2f2f3;
+}

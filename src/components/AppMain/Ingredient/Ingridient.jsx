@@ -2,8 +2,10 @@ import styles from "./Ingredient.module.scss";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
+import { useNavigate } from "react-router";
 
 const Ingredient = (props) => {
+  const navigate = useNavigate();
   const [{ isDragging }, dragSource] = useDrag(
     () => ({
       type: "Ingridient",
@@ -17,6 +19,11 @@ const Ingredient = (props) => {
     }),
     []
   );
+
+  const handleClick = () => {
+    navigate(`/ingredients/${props._id}`);
+  };
+
   return (
     <>
       <div
@@ -24,6 +31,7 @@ const Ingredient = (props) => {
         className={`${styles.Ingredient} pr-4 rl-4 ${
           isDragging ? "IsDragging" : ""
         }`}
+        onClick={handleClick}
       >
         <img src={props.image} alt={props.name} />
         <div className={styles.cost}>

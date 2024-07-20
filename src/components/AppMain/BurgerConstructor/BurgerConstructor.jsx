@@ -1,6 +1,4 @@
 import styles from "./BurgerConstrucor.module.scss";
-// import { useContext } from "react";
-// import { ConstructorContext } from "../../../services/reducers/BurgerConstructor";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { addToOrder } from "../../../services/reducers/OrderSlice";
@@ -8,8 +6,6 @@ import { useDrop } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 import ModalDialog from "../../Dialogs/ModalDialog/ModalDialog";
-// import { useEffect } from "react";
-// import { useDrag } from "react-dnd";
 
 import ConstuctorBlock from "../ConstructorBlock/ConstructorBlock";
 
@@ -122,10 +118,6 @@ const BurgerConstructor = () => {
           <div>{bunError}</div>
         </ModalDialog>
       )}
-
-      {/* <h2 className={styles.IngredintCounter}>
-        Всего в заказе {orderItems.length} ингридиентов
-      </h2> */}
 
       <div
         className={`${styles.BurgerConstructorBlock} ${
