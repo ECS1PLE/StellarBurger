@@ -9,7 +9,13 @@ const ProfileMenu = () => {
   const handleResetPassword = () => {
     dispatch(LogOut());
     dispatch(
-      setValue({ refreshToken: "", statusAuth: false, email: "", password: "" })
+      setValue({
+        refreshToken: "",
+        statusAuth: false,
+        email: "",
+        password: "",
+        name: "",
+      })
     );
   };
   return (

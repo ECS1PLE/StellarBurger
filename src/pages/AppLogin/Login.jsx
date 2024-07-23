@@ -18,7 +18,6 @@ const Login = () => {
   );
 
   const navigate = useNavigate();
-
   const [email, setEmail] = React.useState("");
   const onChangeEmail = (e) => {
     setEmail(e.target.value);
@@ -30,48 +29,51 @@ const Login = () => {
   };
 
   const dispatch = useDispatch();
+  const from = useSelector((state) => state.resetPasswordSlice.from);
 
-  const handleResetPassword = () => {
+  const handleLogin = (e) => {
+    e.preventDefault();
     dispatch(setValue({ email: email, password: password }));
     dispatch(Enter());
   };
 
   useEffect(() => {
-    if (statusAuth) {
+    if (statusAuth && from) {
+      navigate(from);
+    }
+
+    if (statusAuth && !from) {
       navigate("/");
     }
-  }, [statusAuth, navigate]);
+  }, [statusAuth, navigate, from]);
 
   return (
     <>
       <div className={styles.EnterBlock}>
         <div className={`${styles.MainEnterBlock} mb-20`}>
           <PageHeader HeaderText="Войти" />
-          <EmailInput
-            onChange={onChangeEmail}
-            value={email}
-            name={"email"}
-            isIcon={false}
-          />
-          <PasswordInput
-            onChange={onChangePass}
-            value={password}
-            name={"password"}
-            extraClass="mb-2"
-          />
-          <Button
-            htmlType="button"
-            type="primary"
-            size="large"
-            onClick={handleResetPassword}
-          >
-            Войти
-          </Button>
+          <form onSubmit={handleLogin}>
+            <EmailInput
+              onChange={onChangeEmail}
+              value={email}
+              name={"email"}
+              isIcon={false}
+            />
+            <PasswordInput
+              onChange={onChangePass}
+              value={password}
+              name={"password"}
+              extraClass="mb-2"
+            />
+            <Button htmlType="submit" type="primary" size="large">
+              Войти
+            </Button>
+          </form>
         </div>
         <div className={styles.HelpUser}>
           <div>
             <HelpUser
-              question="Вы — новый пользователь?"
+              question="Вы — новый пользователь?"
               LinkTo="/register"
               LinkText="Зарегестрироваться"
             />

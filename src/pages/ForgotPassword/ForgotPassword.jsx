@@ -13,39 +13,36 @@ import { setValue } from "../../services/reducers/ResetPassword";
 
 const ForgetPassword = () => {
   const navigate = useNavigate();
-
   const [value, setVal] = React.useState("");
+  const dispatch = useDispatch();
+
   const onChange = (e) => {
     setVal(e.target.value);
   };
 
-  const dispatch = useDispatch();
-
-  const handleResetPassword = () => {
+  const handleResetPassword = (e) => {
+    e.preventDefault();
     dispatch(setValue(value));
     dispatch(resetPassword(value));
-    console.log("Thats work");
     navigate("/reset-password");
+    dispatch(setValue({ resetToken: true }));
   };
 
   return (
-    <div className={`${styles.EnterBlock}  ${styles.registerBlock}`}>
+    <div className={`${styles.EnterBlock} ${styles.registerBlock}`}>
       <div className={`${styles.MainEnterBlock} mb-20`}>
         <PageHeader HeaderText="Восстановление пароля" />
-        <EmailInput
-          onChange={onChange}
-          value={value}
-          name={"email"}
-          placeholder="Укажите e-mail"
-        />
-        <Button
-          htmlType="button"
-          type="primary"
-          size="large"
-          onClick={handleResetPassword}
-        >
-          Восстановить
-        </Button>
+        <form onSubmit={handleResetPassword}>
+          <EmailInput
+            onChange={onChange}
+            value={value}
+            name={"email"}
+            placeholder="Укажите e-mail"
+          />
+          <Button htmlType="submit" type="primary" size="large">
+            Восстановить
+          </Button>
+        </form>
       </div>
       <div className={styles.HelpUser}>
         <div>

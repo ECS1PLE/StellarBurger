@@ -7,34 +7,25 @@ const setUserInfo = createAsyncThunk(
   async ({ email }, { getState, dispatch }) => {
     const accessToken = getState().resetPasswordSlice.accessToken;
     const name = getState().resetPasswordSlice.name;
-    try {
-      const response = await fetch(
-        "https://norma.nomoreparties.space/api/auth/user",
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: accessToken,
-            email: email,
-            name: name,
-          },
-          body: JSON.stringify({ name, email }),
-        }
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/user`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: accessToken,
+        email: email,
+        name: name,
+      },
+      body: JSON.stringify({ name, email }),
+    });
+    const responseData = await checkResponce(response);
+    if (responseData) {
+      dispatch(
+        setValue({
+          name: responseData.user.name,
+          email: responseData.user.email,
+        })
       );
-      const responseData = await checkResponce(response);
-      if (responseData) {
-        dispatch(
-          setValue({
-            name: responseData.user.name,
-            email: responseData.user.email,
-          })
-        );
-        return responseData;
-      } else {
-        throw new Error("Ошибка при сохранении данных");
-      }
-    } catch (error) {
-      throw new Error("Ошибка");
+      return responseData;
     }
   }
 );
