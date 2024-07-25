@@ -15,6 +15,7 @@ const ProfileMenu = () => {
         email: "",
         password: "",
         name: "",
+        from: "/",
       })
     );
   };

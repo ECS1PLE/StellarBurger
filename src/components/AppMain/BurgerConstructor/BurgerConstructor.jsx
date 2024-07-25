@@ -1,12 +1,14 @@
 import styles from "./BurgerConstrucor.module.scss";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
-import { addToOrder } from "../../../services/reducers/OrderSlice";
+import {
+  addToOrder,
+  removeFromOrder,
+} from "../../../services/reducers/OrderSlice"; // Импортируйте функцию удаления
 import { useDrop } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 import ModalDialog from "../../Dialogs/ModalDialog/ModalDialog";
-
 import ConstuctorBlock from "../ConstructorBlock/ConstructorBlock";
 
 const BurgerConstructor = () => {
@@ -21,15 +23,20 @@ const BurgerConstructor = () => {
 
   const [bunError, setBunError] = useState("");
 
+  const handleRemoveBun = (type) => {
+    const bunToRemove = orderItems.find(
+      (item) => item.type === type && item.ingridientType === "bun"
+    );
+    if (bunToRemove) {
+      dispatcher(removeFromOrder(bunToRemove.orderItemId));
+    }
+  };
+
   const onDropNewIngridient = (item) => {
     if (item.type === "bun") {
-      const bunsInCart = orderItems.filter(
-        ({ ingridientType }) => ingridientType == "bun"
-      );
-      if (bunsInCart?.length > 0) {
-        setBunError("В заказ уже добавлена булка");
-        return;
-      }
+      // Удаляем существующую булку, если она есть
+      handleRemoveBun("top");
+      handleRemoveBun("bottom");
 
       if (
         item.balance -
@@ -46,7 +53,7 @@ const BurgerConstructor = () => {
           orderItemNo: (orderItems.length + 1) * 1000,
           id: item._id,
           ingridientType: "bun",
-          text: item.name + (item.type === "top" ? " (низ)" : " (верх)"),
+          text: item.name + " (верх)",
           thumbnail: item.image,
           price: item.price,
           type: "top",
@@ -60,7 +67,7 @@ const BurgerConstructor = () => {
           orderItemNo: (orderItems.length + 1) * 1000,
           id: item._id,
           ingridientType: "bun",
-          text: item.name + (item.type === "top" ? " (верх)" : " (низ)"),
+          text: item.name + " (низ)",
           thumbnail: item.image,
           price: item.price,
           type: "bottom",
@@ -92,14 +99,13 @@ const BurgerConstructor = () => {
       );
     }
   };
+
   const [{ isOver }, dropRef] = useDrop(
     () => ({
       accept: "Ingridient",
       drop: (item, monitor) => {
-        switch (monitor.getItemType()) {
-          case "Ingridient":
-            onDropNewIngridient(item);
-            break;
+        if (monitor.getItemType() === "Ingridient") {
+          onDropNewIngridient(item);
         }
         return undefined;
       },
@@ -151,8 +157,9 @@ const BurgerConstructor = () => {
     </>
   );
 };
-export default BurgerConstructor;
 
 BurgerConstructor.propTypes = {
   onClose: PropTypes.func,
 };
+
+export default BurgerConstructor;

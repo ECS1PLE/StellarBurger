@@ -3,7 +3,6 @@ import CustomTab from "../CustomTab/CustomTab";
 import Ingredient from "../Ingredient/Ingridient";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect, useState } from "react";
-import { IngridientDetails } from "../../Dialogs/IngridientDetails/IngridientDetails";
 import ModalDialog from "../../Dialogs/ModalDialog/ModalDialog";
 import { useDispatch, useSelector } from "react-redux";
 import { resetError } from "../../../services/reducers/BurgerIngredientsSlice";
@@ -74,11 +73,11 @@ const BuildBurger = () => {
           <div>{loadingError}</div>
         </ModalDialog>
       )}
-      {isOpen && (
+      {/* {isOpen && (
         <ModalDialog open={isOpen} onClose={() => setIsOpen(false)}>
           <IngridientDetails id={selectedDetail} />
         </ModalDialog>
-      )}
+      )} */}
       <div className={styles.BuildBurger}>
         <div className={styles.topContentBuild}>
           <h2>Соберите бургер</h2>

@@ -2,7 +2,14 @@ import styles from "./App.module.scss";
 import Header from "../AppHeader/Header/Header";
 import store from "../../services/reducers/store";
 import { Provider, useDispatch } from "react-redux";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  useNavigate,
+  useLocation,
+  Outlet,
+} from "react-router-dom";
 import Main from "../../pages/AppMain/Main";
 import Login from "../../pages/AppLogin/Login";
 import Register from "../../pages/AppRegister/Register";
@@ -14,12 +21,15 @@ import { IngridientDetails } from "../Dialogs/IngridientDetails/IngridientDetail
 import ModalDialog from "../Dialogs/ModalDialog/ModalDialog";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import { Enter } from "../../services/reducers/ResetPassword";
 import { setValue } from "../../services/reducers/ResetPassword";
+import Layout from "./Layout";
 
 const AppContent = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const background = location.state && location.state.background;
 
   useEffect(() => {
     const accessToken = Cookies.get("accessToken");
@@ -44,13 +54,25 @@ const AppContent = () => {
       Cookies.remove("accessToken");
     }
 
-    console.log(accessToken);
-    console.log(refreshToken);
-    console.log(email);
-    console.log(password);
-    console.log(name);
-    console.log(statusAuth);
+    console.log(accessToken, refreshToken, email, password, name, statusAuth);
   }, [dispatch]);
+
+  // useEffect(() => {
+  //   if (location.state && location.state.background) {
+  //     if (location.pathname.includes("/ingredients/")) {
+  //       setIsOpen(true);
+  //     } else {
+  //       setIsOpen(false);
+  //     }
+  //   }
+  // }, [location]);
+
+  const handleClose = () => {
+    setIsOpen(false);
+    navigate("/");
+  };
+
+  console.log(background);
 
   return (
     <>
@@ -58,17 +80,25 @@ const AppContent = () => {
       <main className={styles.main__content}>
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Main />}>
-            <Route
-              path="/ingredients/:id"
-              element={
-                <ProtectedRouteElement>
-                  <ModalDialog open={isOpen} onClose={() => setIsOpen(false)}>
+          <Route path="/" element={<Layout />}>
+            <Route index path="/" element={<Main />} />
+            <Route path="/ingredients" element={<Outlet />}>
+              <Route
+                path=":id"
+                element={
+                  background ? (
+                    <>
+                      <Main />
+                      <ModalDialog open={isOpen} onClose={handleClose}>
+                        <IngridientDetails />
+                      </ModalDialog>
+                    </>
+                  ) : (
                     <IngridientDetails />
-                  </ModalDialog>
-                </ProtectedRouteElement>
-              }
-            />
+                  )
+                }
+              />
+            </Route>
           </Route>
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgetPassword />} />
@@ -83,6 +113,12 @@ const AppContent = () => {
             }
           />
         </Routes>
+
+        {/* {background && (
+          <ModalDialog open={isOpen} onClose={handleClose}>
+            <IngridientDetails />
+          </ModalDialog>
+        )} */}
       </main>
     </>
   );
@@ -92,7 +128,9 @@ const App = () => {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <AppContent />
+        <Routes>
+          <Route path="*" element={<AppContent />} />
+        </Routes>
       </BrowserRouter>
     </Provider>
   );

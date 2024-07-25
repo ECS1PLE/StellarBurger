@@ -1,10 +1,11 @@
 import PropTypes from "prop-types";
 import styles from "./IngridientDetails.module.scss";
 import InfoBlock from "../InfoBlock/InfoBLock";
-import { useSelector } from "react-redux";
-import { createSelector } from "@reduxjs/toolkit";
+import { useDispatch, useSelector } from "react-redux";
+//import { createSelector } from "@reduxjs/toolkit";
 import { useEffect } from "react";
 import { useParams } from "react-router";
+import { ingridientsThunk } from "../../../services/actions/IngridientsThunk";
 
 const detailKeys = {
   calories: "Калории,ккал",
@@ -13,46 +14,58 @@ const detailKeys = {
   carbohydrates: "Углеводы, г",
 };
 
-const requierdFields = ["name", "price", "type", "image"];
+//const requierdFields = ["name", "price", "type", "image"];
 
 const IngridientDetails = () => {
-  const { id } = useParams();
-  const ingredientInfoSelector = createSelector(
-    [(ingridient) => ingridient],
-    (ingridient) => {
-      const info = {
-        id: id,
-        image: "",
-        name: "",
-        price: 0,
-        type: "",
-        energy: [],
-      };
-      console.log("SELF SELECTOR");
-      console.log(`ID = ${id}`);
-      console.log(ingridient);
-      console.log("SELF SELECTOR");
-      if (ingridient) {
-        requierdFields.forEach((key) => (info[key] = ingridient[key]));
-        info.energy = Object.keys(detailKeys).reduce((prev, cur) => {
-          if (!prev) {
-            prev = {};
-          }
-          prev[cur] = {
-            name: detailKeys[cur],
-            value: ingridient?.[cur] || 0,
-          };
-          return { ...prev };
-        }, {});
-      }
-      return info;
-    }
+  const dispatcher = useDispatch();
+
+  const ingredients = useSelector(
+    (state) => state.burgerIngredients.ingredients
   );
+
+  useEffect(() => {
+    if (!ingredients?.length) {
+      dispatcher(ingridientsThunk());
+    }
+  }, [ingredients, dispatcher]);
+
+  const { id } = useParams();
+  // const ingredientInfoSelector = createSelector(
+  //   [(ingridient) => ingridient],
+  //   (ingridient) => {
+  //     const info = {
+  //       id: id,
+  //       image: "",
+  //       name: "",
+  //       price: 0,
+  //       type: "",
+  //       energy: [],
+  //     };
+  //     console.log("SELF SELECTOR");
+  //     console.log(`ID = ${id}`);
+  //     console.log(ingridient);
+  //     console.log("SELF SELECTOR");
+  //     if (ingridient) {
+  //       requierdFields.forEach((key) => (info[key] = ingridient[key]));
+  //       info.energy = Object.keys(detailKeys).reduce((prev, cur) => {
+  //         if (!prev) {
+  //           prev = {};
+  //         }
+  //         prev[cur] = {
+  //           name: detailKeys[cur],
+  //           value: ingridient?.[cur] || 0,
+  //         };
+  //         return { ...prev };
+  //       }, {});
+  //     }
+  //     return info;
+  //   }
+  // );
 
   const inf = useSelector((state) =>
     state.burgerIngredients.ingredients.find((item) => item._id === id)
   );
-  console.log(inf);
+  console.log("DETAIL");
 
   if (!inf) {
     return <div>Ошибка</div>;
@@ -67,7 +80,7 @@ const IngridientDetails = () => {
   // });
 
   return (
-    <>
+    <div className={styles.flexBlock}>
       <div className={`${styles.modalTitle} mt-10 ml-10 mr-10`}>
         <p>Детали ингредиента</p>
         {/* <CloseModal onClose={props.onClose} /> */}
@@ -83,7 +96,7 @@ const IngridientDetails = () => {
             ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
