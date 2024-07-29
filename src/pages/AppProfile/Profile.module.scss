@@ -1,0 +1,26 @@
+.ProfileContentMain {
+  margin-top: auto;
+  justify-content: center;
+  display: flex;
+  height: 86vh;
+  gap: 60px;
+}
+
+.LeftProfileContrent {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.RightProfileContrent {
+  margin-top: auto;
+  margin-bottom: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.RedactUser {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+}

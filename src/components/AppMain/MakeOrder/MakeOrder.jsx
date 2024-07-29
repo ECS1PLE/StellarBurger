@@ -7,30 +7,48 @@ import OrderDetails from "../../Dialogs/OrderDetails/OrderDetails";
 import { useEffect, useState } from "react";
 import ModalDialog from "../../Dialogs/ModalDialog/ModalDialog";
 import { useSelector } from "react-redux";
-// import { useReducer } from "react";
 import { useDispatch } from "react-redux";
 import {
   clearOrder,
   resetOrderError,
 } from "../../../services/reducers/OrderSlice";
 import { makeOrderThunk } from "../../../services/actions/MakeOrderThunk";
+import { useNavigate } from "react-router";
+import { setValue } from "../../../services/reducers/ResetPassword";
 
 const MakeOrder = () => {
   const [isOpen, setIsOpen] = useState(false);
-
   const dispatcher = useDispatch();
+  const navigate = useNavigate();
 
   const orderItems = useSelector((state) => state.OrderSlice.orderItems);
   const orderError = useSelector((state) => state.OrderSlice.orderError);
   const orderNumber = useSelector(
     (state) => state.OrderSlice.order?.order?.number
   );
+  const isAuthenticated = useSelector(
+    (state) => state.resetPasswordSlice.statusAuth
+  );
 
   const handleOrder = () => {
-    if (orderItems?.length) {
+    if (!isAuthenticated) {
+      navigate("/login");
+      dispatcher(
+        setValue({
+          from: null,
+        })
+      );
+    } else if (orderItems?.length) {
+      setIsOpen(true);
       dispatcher(makeOrderThunk());
     }
   };
+
+  useEffect(() => {
+    if (orderNumber) {
+      setIsOpen(true);
+    }
+  }, [orderNumber]);
 
   useEffect(() => {
     if (orderNumber) {
@@ -75,9 +93,3 @@ const MakeOrder = () => {
 };
 
 export default MakeOrder;
-
-// MakeOrder.propTypes = {
-//   //   // onClose: PropTypes.func.isRequired,
-//   //   // imgSrc: PropTypes.string.isRequired,
-//   price: PropTypes.number.isRequired,
-// };

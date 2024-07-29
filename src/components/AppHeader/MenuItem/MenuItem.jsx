@@ -1,4 +1,5 @@
 import styles from "./MenuItem.module.scss";
+import PropTypes from "prop-types";
 
 function MenuItem(props) {
   return (
@@ -7,5 +8,9 @@ function MenuItem(props) {
     </div>
   );
 }
+
+MenuItem.propTypes = {
+  text: PropTypes.string,
+};
 
 export default MenuItem;

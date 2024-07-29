@@ -1,0 +1,23 @@
+.text {
+  font-family: "Jet Brains Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #8585ad;
+}
+
+div > a {
+  width: fit-content;
+  color: #4c4cff;
+  font-family: "Jet Brains Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.HelpUserBlock {
+  display: flex;
+}

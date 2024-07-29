@@ -8,6 +8,8 @@ import { useEffect } from "react";
 const modalRoot = document.querySelector("#modal");
 
 const ModalDialog = (props) => {
+  console.log("MODAL");
+
   useEffect(() => {
     const close = (event) => {
       if (event.key === "Escape") {
