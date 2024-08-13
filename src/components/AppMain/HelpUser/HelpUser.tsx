@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent, FormEvent, KeyboardEvent } from "react";
 import { Link } from "react-router-dom";
 import styles from "./HelpUser.module.scss";
 

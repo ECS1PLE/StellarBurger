@@ -7,7 +7,9 @@ import { setValue } from "../../../services/reducers/ResetPassword";
 const ProfileMenu: React.FC = () => {
   const dispatch = useDispatch();
 
-  const handleResetPassword = () => {
+  // Типизируем событие как SyntheticEvent
+  const handleResetPassword = (event: React.SyntheticEvent) => {
+    event.preventDefault();
     dispatch(LogOut());
     dispatch(
       setValue({

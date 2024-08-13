@@ -1,3 +1,5 @@
+import React, { ChangeEvent, FormEvent } from "react";
+import { useDispatch } from "react-redux";
 import styles from "./Register.module.scss";
 import PageHeader from "../../components/AppMain/PageHeader/PageHeader";
 import {
@@ -6,23 +8,33 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React from "react";
 import HelpUser from "../../components/AppMain/HelpUser/HelpUser";
 import { setValue } from "../../services/reducers/ResetPassword";
 import { registerAcc } from "../../services/actions/Register";
-import { useDispatch } from "react-redux";
 
-const Register = () => {
-  const [name, setName] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+const Register: React.FC = () => {
+  const [name, setName] = React.useState<string>("");
+  const [email, setEmail] = React.useState<string>("");
+  const [password, setPassword] = React.useState<string>("");
 
   const dispatch = useDispatch();
 
-  const handleResetPassword = (e) => {
+  const handleResetPassword = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     dispatch(setValue({ email: email, name: name }));
     dispatch(registerAcc());
+  };
+
+  const handleNameChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    setName(e.target.value);
+  };
+
+  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    setPassword(e.target.value);
   };
 
   return (
@@ -31,21 +43,17 @@ const Register = () => {
         <PageHeader HeaderText="Регистрация" />
         <form onSubmit={handleResetPassword}>
           <Input
-            onChange={(e) => setName(e.target.value)}
+            onChange={handleNameChange}
             value={name}
-            name={"name"}
+            name="name"
             placeholder="Имя"
             inputMode="text"
           />
-          <EmailInput
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-            name={"email"}
-          />
+          <EmailInput onChange={handleEmailChange} value={email} name="email" />
           <PasswordInput
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handlePasswordChange}
             value={password}
-            name={"password"}
+            name="password"
             extraClass="mb-2"
           />
           <Button htmlType="submit" type="primary" size="large">

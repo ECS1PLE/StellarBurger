@@ -10,21 +10,23 @@ import HelpUser from "../../components/AppMain/HelpUser/HelpUser";
 import { useDispatch, useSelector } from "react-redux";
 import { setValue } from "../../services/reducers/ResetPassword";
 import { newPassword } from "../../services/actions/ResetPasswordThunk";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
+import { RootState } from "../../services/reducers/store";
 
-const ResetPassword = () => {
-  const [password, setPassword] = React.useState("");
+const ResetPassword: React.FC = () => {
+  const [password, setPassword] = React.useState<string>("");
+  const [name, setName] = React.useState<string>("");
   const navigate = useNavigate();
+
   const TokenToReset = useSelector(
-    (state) => state.resetPasswordSlice.resetToken
+    (state: RootState) => state.resetPasswordSlice.resetToken
   );
 
-  const onChangePass = (e) => {
+  const onChangePass = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
 
-  const [name, setName] = React.useState("");
-  const onChangeName = (e) => {
+  const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
 
@@ -36,14 +38,14 @@ const ResetPassword = () => {
 
   const dispatch = useDispatch();
 
-  const handleResetPassword = (e) => {
+  const handleResetPassword = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(setValue({ password: password, token: name }));
+    dispatch(setValue({ password, token: name }));
     dispatch(newPassword({ password, token: name }));
   };
 
   return (
-    <div className={`${styles.EnterBlock}  ${styles.registerBlock}`}>
+    <div className={`${styles.EnterBlock} ${styles.registerBlock}`}>
       <div className={`${styles.MainEnterBlock} mb-20`}>
         <PageHeader HeaderText="Восстановление пароля" />
         <form onSubmit={handleResetPassword}>

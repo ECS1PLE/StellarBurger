@@ -11,28 +11,40 @@ interface ModalDialogProps {
 
 const modalRoot = document.querySelector("#modal") as HTMLElement;
 
-const ModalDialog: React.FC<ModalDialogProps> = (props) => {
+const ModalDialog: React.FC<ModalDialogProps> = ({ children, onClose }) => {
   console.log("MODAL");
 
   useEffect(() => {
-    const close = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        if (props.onClose) {
-          props.onClose();
-        }
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && onClose) {
+        onClose();
       }
     };
 
-    window.addEventListener("keydown", close);
-    return () => window.removeEventListener("keydown", close);
-  }, [props]);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onClose]);
+
+  const handleOverlayClick = (event: React.SyntheticEvent<HTMLDivElement>) => {
+    if (onClose) {
+      onClose();
+    }
+  };
+
+  const handleCloseClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (onClose) {
+      onClose();
+    }
+  };
 
   return createPortal(
     <>
-      <Overlay onClose={props.onClose} />
+      <Overlay onClose={handleOverlayClick} />
       <div className={`${styles.modal} ${styles.centerModel}`}>
-        <CloseModal onClose={props.onClose} />
-        {props.children}
+        <CloseModal onClose={handleCloseClick} />
+        {children}
       </div>
     </>,
     modalRoot

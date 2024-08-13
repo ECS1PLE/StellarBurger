@@ -33,7 +33,7 @@ interface RootState {
 }
 
 const MakeOrder = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const dispatcher = useDispatch();
   const navigate = useNavigate();
 
@@ -80,7 +80,7 @@ const MakeOrder = () => {
       {isOpen && !orderError && (
         <ModalDialog
           open={isOpen}
-          onClose={() => {
+          onClose={(e: React.MouseEvent) => {
             setIsOpen(false);
             dispatcher(clearOrder());
           }}

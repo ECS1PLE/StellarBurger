@@ -177,8 +177,4 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = () => {
   );
 };
 
-BurgerConstructor.propTypes = {
-  onClose: PropTypes.func,
-};
-
 export default BurgerConstructor;

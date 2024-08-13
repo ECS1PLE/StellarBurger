@@ -6,49 +6,69 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserInfo } from "../../services/actions/UserInfo";
 import { setUserInfo } from "../../services/actions/NewUserInfo";
+import { RootState } from "../../services/reducers/store"; // assuming you have a RootState type defined
 
-const Profile = () => {
+interface User {
+  name: string;
+  email: string;
+  password: string;
+}
+
+const Profile: React.FC = () => {
   const dispatch = useDispatch();
 
+  // Fetch user information on mount
   useEffect(() => {
     dispatch(getUserInfo());
   }, [dispatch]);
 
-  const HandleClickSave = () => {
+  const handleClickSave = () => {
     dispatch(
       setUserInfo({
-        name: name,
-        email: email,
+        name,
+        email,
       })
     );
   };
 
-  const HandleClickCancel = () => {
+  const handleClickCancel = () => {
     setName(initialName);
     setEmail(initialEmail);
   };
 
-  const user = useSelector((state) => state.resetPasswordSlice);
-  const UserName = useSelector((state) => state.resetPasswordSlice.name);
-  console.log(UserName);
+  const user = useSelector((state: RootState) => state.resetPasswordSlice);
+  const userName = user.name;
+  const userEmail = user.email;
 
-  const UserPassword = user.password;
-  const UserEmail = user.email;
+  const [name, setName] = useState<string>(userName);
+  const [email, setEmail] = useState<string>(userEmail);
+  const [password, setPassword] = useState<string>(user.password);
 
-  const [name, setName] = useState(UserName);
-  const [email, setEmail] = useState(UserEmail);
-  const [password, setPassword] = useState(UserPassword);
+  const [initialName, setInitialName] = useState<string>(userName);
+  const [initialEmail, setInitialEmail] = useState<string>(userEmail);
 
-  const [initialName, setInitialName] = useState(UserName);
-  const [initialEmail, setInitialEmail] = useState(UserEmail);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const inputRef = React.useRef(null);
   const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0);
+    if (inputRef.current) {
+      setTimeout(() => inputRef.current.focus(), 0);
+    }
+  };
+
+  const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  };
+
+  const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+
+  const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
   };
 
   return (
@@ -60,7 +80,7 @@ const Profile = () => {
         <Input
           type={"text"}
           placeholder={"Имя"}
-          onChange={(e) => setName(e.target.value)}
+          onChange={handleChangeName}
           icon={"EditIcon"}
           value={name}
           name={"name"}
@@ -72,14 +92,14 @@ const Profile = () => {
           isIcon={true}
         />
         <EmailInput
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={handleChangeEmail}
           value={email}
           name={"email"}
           placeholder="Логин"
           isIcon={true}
         />
         <PasswordInput
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={handleChangePassword}
           value={password}
           name={"password"}
           icon="EditIcon"
@@ -89,7 +109,7 @@ const Profile = () => {
             htmlType="button"
             type="secondary"
             size="large"
-            onClick={HandleClickCancel}
+            onClick={handleClickCancel}
           >
             Отменить
           </Button>
@@ -97,7 +117,7 @@ const Profile = () => {
             htmlType="button"
             type="primary"
             size="large"
-            onClick={HandleClickSave}
+            onClick={handleClickSave}
           >
             Сохранить
           </Button>

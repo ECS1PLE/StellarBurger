@@ -28,8 +28,8 @@ const ingridientTypes: Record<string, string> = {
 
 const BuildBurger: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("one");
-  const [selectedDetail, setSelectedDetail] = useState("");
+  const [activeTab, setActiveTab] = useState<string>("one");
+  const [selectedDetail, setSelectedDetail] = useState<string>("");
   const location = useLocation();
 
   const { ref: refBun, inView: inViewBun } = useInView({ threshold: 0.2 });
@@ -72,7 +72,7 @@ const BuildBurger: React.FC = () => {
     }
   }, [location]);
 
-  const handleIngredientClick = (id: string) => {
+  const handleIngredientClick = (id: string): void => {
     setIsOpen(true);
     setSelectedDetail(id);
   };
@@ -111,7 +111,9 @@ const BuildBurger: React.FC = () => {
                     <div
                       className={styles.IngredientBlock}
                       key={item._id}
-                      onClick={() => handleIngredientClick(item._id)}
+                      onClick={(e: React.MouseEvent) =>
+                        handleIngredientClick(item._id)
+                      }
                     >
                       <Counter
                         count={orderItems.reduce((acc, orderItem) => {

@@ -1,4 +1,9 @@
-import React from "react";
+import React, {
+  ChangeEvent,
+  FormEvent,
+  SyntheticEvent,
+  KeyboardEvent,
+} from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import BurgerIngredients from "../../components/AppMain/BurgerIngredients/BurgerIngredients";

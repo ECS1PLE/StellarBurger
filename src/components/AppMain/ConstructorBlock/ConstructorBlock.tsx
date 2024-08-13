@@ -10,8 +10,8 @@ import {
   removeFromOrder,
 } from "../../../services/reducers/OrderSlice";
 import { useDrag, useDrop } from "react-dnd";
-import { RootState } from '../../../services/reducers/store';
-import React from 'react';
+import { RootState } from "../../../services/reducers/store";
+import React from "react";
 
 // Define the types for the item prop
 interface OrderItem {
@@ -33,7 +33,9 @@ interface ConstuctorBlockProps {
 
 const ConstuctorBlock: React.FC<ConstuctorBlockProps> = ({ item }) => {
   const dispatcher = useDispatch();
-  const orderItems = useSelector((state: RootState) => state.OrderSlice.orderItems);
+  const orderItems = useSelector(
+    (state: RootState) => state.OrderSlice.orderItems
+  );
 
   const moveOrderItem = (newItem: OrderItem) => {
     dispatcher(
@@ -44,7 +46,11 @@ const ConstuctorBlock: React.FC<ConstuctorBlockProps> = ({ item }) => {
     );
   };
 
-  const [{ isOver }, dropRef] = useDrop<OrderItem, OrderItem, { isOver: boolean }>(
+  const [{ isOver }, dropRef] = useDrop<
+    OrderItem,
+    OrderItem,
+    { isOver: boolean }
+  >(
     () => ({
       accept: "ConstructorElement",
       collect: (monitor) => ({
@@ -71,6 +77,10 @@ const ConstuctorBlock: React.FC<ConstuctorBlockProps> = ({ item }) => {
     [item]
   );
 
+  const handleClose = (): void => {
+    dispatcher(removeFromOrder(item.orderItemId));
+  };
+
   return (
     <div
       ref={dropRef}
@@ -79,13 +89,13 @@ const ConstuctorBlock: React.FC<ConstuctorBlockProps> = ({ item }) => {
       <div
         ref={dragSource}
         className={item.isLocked ? styles.r27 : styles.drgagNdropBlock}
-        draggable={true}
+        draggable={!item.isLocked}
       >
         {!item.isLocked && <DragIcon type="primary" />}
         <ConstructorElement
           key={item.orderItemId}
           {...item}
-          handleClose={() => dispatcher(removeFromOrder(item.orderItemId))}
+          handleClose={handleClose} // use the typed handleClose function
         />
       </div>
     </div>

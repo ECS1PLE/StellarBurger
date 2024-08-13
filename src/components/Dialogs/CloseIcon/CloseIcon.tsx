@@ -4,13 +4,18 @@ import React from "react";
 
 interface CloseModalProps {
   onClose: () => void;
+  onClick: () => void;
   addClass?: string;
 }
 
 const CloseModal: React.FC<CloseModalProps> = ({ onClose, addClass }) => {
+  const handleClose = (event: React.SyntheticEvent) => {
+    onClose();
+  };
+
   return (
     <div className={`${styles.IconRight} ${addClass || ""}`}>
-      <CloseIcon type="primary" onClick={onClose} />
+      <CloseIcon type="primary" onClick={handleClose} />
     </div>
   );
 };

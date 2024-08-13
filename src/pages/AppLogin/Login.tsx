@@ -11,29 +11,23 @@ import { Enter } from "../../services/actions/Login";
 import { useDispatch, useSelector } from "react-redux";
 import { setValue } from "../../services/reducers/ResetPassword";
 import { useNavigate } from "react-router";
+import { RootState } from "../../services/reducers/store";
 
-const Login = () => {
+const Login: React.FC = () => {
   const statusAuth = useSelector(
-    (state) => state.resetPasswordSlice.statusAuth
+    (state: RootState) => state.resetPasswordSlice.statusAuth
   );
+  const from = useSelector((state: RootState) => state.resetPasswordSlice.from);
 
   const navigate = useNavigate();
   const [email, setEmail] = React.useState("");
-  const onChangeEmail = (e) => {
-    setEmail(e.target.value);
-  };
-
   const [password, setPassword] = React.useState("");
-  const onChangePass = (e) => {
-    setPassword(e.target.value);
-  };
 
   const dispatch = useDispatch();
-  const from = useSelector((state) => state.resetPasswordSlice.from);
 
-  const handleLogin = (e) => {
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(setValue({ email: email, password: password }));
+    dispatch(setValue({ email, password }));
     dispatch(Enter());
   };
 
@@ -47,6 +41,14 @@ const Login = () => {
     }
   }, [statusAuth, navigate, from]);
 
+  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+
+  const onChangePass = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+
   return (
     <>
       <div className={styles.EnterBlock}>
@@ -56,13 +58,13 @@ const Login = () => {
             <EmailInput
               onChange={onChangeEmail}
               value={email}
-              name={"email"}
+              name="email"
               isIcon={false}
             />
             <PasswordInput
               onChange={onChangePass}
               value={password}
-              name={"password"}
+              name="password"
               extraClass="mb-2"
             />
             <Button htmlType="submit" type="primary" size="large">

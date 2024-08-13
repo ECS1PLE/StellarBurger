@@ -8,13 +8,20 @@ interface CustomTabProps {
 }
 
 const CustomTab: React.FC<CustomTabProps> = ({ active = "bun", setActive }) => {
+  const handleTabClick =
+    (tab: "bun" | "sauce" | "main") =>
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      setActive(tab);
+    };
+
   return (
     <div className={styles.flex}>
       <a href="#bun">
         <Tab
           value="bun"
           active={active === "bun"}
-          onClick={() => setActive("bun")}
+          onClick={handleTabClick("bun")}
           id="bun"
         >
           Булки
@@ -24,7 +31,7 @@ const CustomTab: React.FC<CustomTabProps> = ({ active = "bun", setActive }) => {
         <Tab
           value="sauce"
           active={active === "sauce"}
-          onClick={() => setActive("sauce")}
+          onClick={handleTabClick("sauce")}
           id="sauce"
         >
           Соусы
@@ -34,7 +41,7 @@ const CustomTab: React.FC<CustomTabProps> = ({ active = "bun", setActive }) => {
         <Tab
           value="main"
           active={active === "main"}
-          onClick={() => setActive("main")}
+          onClick={handleTabClick("main")}
           id="main"
         >
           Начинки

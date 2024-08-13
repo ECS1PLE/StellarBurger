@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, SyntheticEvent } from "react";
 import styles from "./IngridientDetails.module.scss";
 import InfoBlock from "../InfoBlock/InfoBLock";
 import { useDispatch, useSelector } from "react-redux";
@@ -48,6 +48,11 @@ const IngridientDetails: React.FC = () => {
   if (!inf) {
     return <div>Ошибка</div>;
   }
+
+  const handleButtonClick = (event: SyntheticEvent<HTMLButtonElement>) => {
+    // Пример обработки события
+    console.log("Button clicked", event);
+  };
 
   return (
     <div className={styles.flexBlock}>
