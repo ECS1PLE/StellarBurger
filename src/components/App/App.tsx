@@ -129,7 +129,14 @@ const AppContent: React.FC = () => {
             }
           />
           <Route path="/feed" element={<OrderList />} />
-          <Route path="/profile/orders/number" element={<FeedId />} />
+          <Route
+            path="/profile/orders/:orderId"
+            element={
+              <ProtectedRouteElement>
+                <FeedId />
+              </ProtectedRouteElement>
+            }
+          />
         </Routes>
       </main>
     </>
