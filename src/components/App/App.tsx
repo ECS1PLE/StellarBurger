@@ -23,6 +23,9 @@ import ModalDialog from "../Dialogs/ModalDialog/ModalDialog";
 import Cookies from "js-cookie";
 import { setValue } from "../../services/reducers/ResetPassword";
 import Layout from "./Layout";
+import FeedId from "../../pages/FeedId/FeedId";
+import ProfileOrders from "../../pages/ProfileOrders/ProfileOrders";
+import OrderList from "../../pages/OrderList/OrderList";
 
 interface LocationState {
   background?: Location;
@@ -106,6 +109,27 @@ const AppContent: React.FC = () => {
               </ProtectedRouteElement>
             }
           />
+          <Route
+            path="/feed/:orderId"
+            element={
+              <>
+                <OrderList />
+                <ModalDialog open={isOpen} onClose={handleClose}>
+                  <FeedId />
+                </ModalDialog>
+              </>
+            }
+          />
+          <Route
+            path="/profile/orders"
+            element={
+              <ProtectedRouteElement>
+                <ProfileOrders />
+              </ProtectedRouteElement>
+            }
+          />
+          <Route path="/feed" element={<OrderList />} />
+          <Route path="/profile/orders/number" element={<FeedId />} />
         </Routes>
       </main>
     </>

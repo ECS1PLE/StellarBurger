@@ -26,12 +26,10 @@ const Header: React.FC = () => {
               <MenuItem text="Конструктор" />
             </div>
           </Link>
-          <Link to="/orders">
+          <Link to="/feed">
             <div
               className={`${styles.MenuItemContent} p-5 ${
-                location.pathname === "/orders"
-                  ? styles.Active
-                  : styles.notActive
+                location.pathname === "/feed" ? styles.Active : styles.notActive
               }`}
             >
               <ListIcon type="primary" />

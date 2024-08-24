@@ -29,12 +29,15 @@ const ProtectedRouteElement: React.FC<ProtectedRouteElementProps> = ({
   }, [location, isAuthenticated, dispatch]);
 
   if (!isAuthenticated && !allowedPaths.includes(location.pathname)) {
+    console.log("REDIRECT TO LOGIN");
     return <Navigate to="/login" state={{ from: location.pathname }} replace />;
   }
 
-  if (isAuthenticated && from && from !== location.pathname) {
-    return <Navigate to={from} replace />;
-  }
+  // if (isAuthenticated && from && from !== location.pathname) {
+  //   console.log(`REDIRECT TO ${from} ${location.pathname}`);
+
+  //   return <Navigate to={from} replace />;
+  // }
 
   return <>{children}</>;
 };

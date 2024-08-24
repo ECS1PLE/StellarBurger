@@ -1,0 +1,23 @@
+.ProfileContentMain {
+  margin-top: auto;
+  justify-content: center;
+  display: flex;
+  height: 86vh;
+  gap: 60px;
+}
+
+.LeftProfileContrent {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.RightProfileContrent {
+  margin-top: auto;
+  margin-bottom: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  height: 816px;
+  margin-top: 40px;
+  overflow-y: scroll;
+}
