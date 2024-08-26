@@ -6,7 +6,7 @@ import {
 import OrderDetails from "../../Dialogs/OrderDetails/OrderDetails";
 import { useEffect, useState } from "react";
 import ModalDialog from "../../Dialogs/ModalDialog/ModalDialog";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../../services/hooks/hooks";
 import {
   clearOrder,
   resetOrderError,
@@ -34,19 +34,19 @@ interface RootState {
 
 const MakeOrder = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const dispatcher = useDispatch();
+  const dispatcher = useAppDispatch();
   const navigate = useNavigate();
 
-  const orderItems = useSelector(
+  const orderItems = useAppSelector(
     (state: RootState) => state.OrderSlice.orderItems
   );
-  const orderError = useSelector(
+  const orderError = useAppSelector(
     (state: RootState) => state.OrderSlice.orderError
   );
-  const orderNumber = useSelector(
+  const orderNumber = useAppSelector(
     (state: RootState) => state.OrderSlice.order?.number
   );
-  const isAuthenticated = useSelector(
+  const isAuthenticated = useAppSelector(
     (state: RootState) => state.resetPasswordSlice.statusAuth
   );
 

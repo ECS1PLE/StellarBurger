@@ -2,11 +2,12 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import styles from "./ProfileMenu.module.scss";
 import { LogOut } from "../../../services/actions/LogOut";
-import { useDispatch } from "react-redux";
 import { setValue } from "../../../services/reducers/ResetPassword";
 
+import { useAppDispatch } from "../../../services/hooks/hooks";
+
 const ProfileMenu: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
 
   const handleResetPassword = (event: React.SyntheticEvent) => {

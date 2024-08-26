@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FormEvent } from "react";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../services/hooks/hooks";
 import styles from "./Register.module.scss";
 import PageHeader from "../../components/AppMain/PageHeader/PageHeader";
 import {
@@ -17,7 +17,7 @@ const Register: React.FC = () => {
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleResetPassword = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();

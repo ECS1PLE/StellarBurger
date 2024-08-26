@@ -1,14 +1,13 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store"; // предполагается, что у вас есть RootState для вашего Redux store
+import { useAppDispatch, useAppSelector } from "../../services/hooks/hooks"; // Используем типизированные хуки
 import { ingridientsThunk } from "../../services/actions/IngridientsThunk";
 import { Outlet } from "react-router";
 
 const Layout: React.FC = () => {
-  const ingredients = useSelector(
-    (state: RootState) => state.burgerIngredients.ingredients
+  const ingredients = useAppSelector(
+    (state) => state.burgerIngredients.ingredients
   );
-  const dispatcher = useDispatch();
+  const dispatcher = useAppDispatch();
 
   useEffect(() => {
     if (!ingredients?.length) {

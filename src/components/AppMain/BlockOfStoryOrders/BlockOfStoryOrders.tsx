@@ -4,13 +4,13 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux"; // Если вы используете Redux для состояния
+import { useAppDispatch, useAppSelector } from "../../../services/hooks/hooks";
 import { ingridientsThunk } from "../../../services/actions/IngridientsThunk";
 
-const BlockOfStoryOrders = ({ order }) => {
-  const dispatcher = useDispatch();
+const BlockOfStoryOrders: React.FC = ({ order }) => {
+  const dispatcher = useAppDispatch();
 
-  const burgerIngridients = useSelector(
+  const burgerIngridients = useAppSelector(
     (state) => state.burgerIngredients.ingredients
   );
 
@@ -49,7 +49,7 @@ const BlockOfStoryOrders = ({ order }) => {
           return (
             ingredient && (
               <div className={styles.borderImg} key={index}>
-                <img src={ingredient.image} />
+                <img src={ingredient.image} alt={ingredient.name} />
               </div>
             )
           );

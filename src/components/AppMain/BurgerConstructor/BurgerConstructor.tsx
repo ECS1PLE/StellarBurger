@@ -1,6 +1,5 @@
 import styles from "./BurgerConstrucor.module.scss";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
   addToOrder,
   removeFromOrder,
@@ -9,6 +8,7 @@ import { useDrop } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
 import ModalDialog from "../../Dialogs/ModalDialog/ModalDialog";
 import ConstuctorBlock from "../ConstructorBlock/ConstructorBlock";
+import { useAppDispatch, useAppSelector } from "../../../services/hooks/hooks";
 
 interface OrderItem {
   orderItemId: string;
@@ -27,10 +27,10 @@ interface BurgerConstructorProps {
 }
 
 const BurgerConstructor: React.FC<BurgerConstructorProps> = () => {
-  const orderItems: OrderItem[] = useSelector(
-    (state: any) => state.OrderSlice.orderItems
-  );
-  const dispatch = useDispatch();
+  const orderItems: OrderItem[] = useAppSelector(
+    (state) => state.OrderSlice.orderItems
+  ); // use the typed selector
+  const dispatch = useAppDispatch(); // use the typed dispatch
 
   const constructorStructure = [
     { type: "top", isLocked: true, useParent: false, ingridientType: "bun" },
@@ -50,7 +50,6 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = () => {
   };
 
   const onDropNewIngridient = (item: any) => {
-    // Update 'any' with a more specific type if needed
     console.log("DROP fired");
     if (item.type === "bun") {
       handleRemoveBun("top");

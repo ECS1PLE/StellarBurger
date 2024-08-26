@@ -1,7 +1,7 @@
 import React, { useEffect, SyntheticEvent } from "react";
 import styles from "./IngridientDetails.module.scss";
 import InfoBlock from "../InfoBlock/InfoBLock";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../../services/hooks/hooks";
 import { useParams } from "react-router";
 import { ingridientsThunk } from "../../../services/actions/IngridientsThunk";
 
@@ -30,10 +30,10 @@ const detailKeys: Record<string, string> = {
 };
 
 const IngridientDetails: React.FC = () => {
-  const dispatcher = useDispatch();
+  const dispatcher = useAppDispatch();
   const { id } = useParams<{ id: string }>();
 
-  const ingredients = useSelector(
+  const ingredients = useAppSelector(
     (state: RootState) => state.burgerIngredients.ingredients
   );
 
@@ -50,7 +50,6 @@ const IngridientDetails: React.FC = () => {
   }
 
   const handleButtonClick = (event: SyntheticEvent<HTMLButtonElement>) => {
-    // Пример обработки события
     console.log("Button clicked", event);
   };
 

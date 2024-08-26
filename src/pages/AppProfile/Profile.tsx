@@ -7,10 +7,10 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, { useEffect, useState, useRef, ChangeEvent } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../services/hooks/hooks";
 import { getUserInfo } from "../../services/actions/UserInfo";
 import { setUserInfo } from "../../services/actions/NewUserInfo";
-import { RootState } from "../../services/reducers/store"; // assuming you have a RootState type defined
+import { RootState } from "../../services/reducers/store";
 
 interface User {
   name: string;
@@ -19,9 +19,8 @@ interface User {
 }
 
 const Profile: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  // Fetch user information on mount
   useEffect(() => {
     dispatch(getUserInfo());
   }, [dispatch]);
@@ -40,7 +39,7 @@ const Profile: React.FC = () => {
     setEmail(initialEmail);
   };
 
-  const user = useSelector((state: RootState) => state.resetPasswordSlice);
+  const user = useAppSelector((state: RootState) => state.resetPasswordSlice);
   const userName = user.name;
   const userEmail = user.email;
 

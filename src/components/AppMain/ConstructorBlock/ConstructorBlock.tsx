@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../../services/hooks/hooks";
 import styles from "./ConstuctorBlock.module.scss";
 import {
   ConstructorElement,
@@ -31,8 +31,8 @@ interface ConstuctorBlockProps {
 }
 
 const ConstuctorBlock: React.FC<ConstuctorBlockProps> = ({ item }) => {
-  const dispatcher = useDispatch();
-  const orderItems = useSelector(
+  const dispatcher = useAppDispatch();
+  const orderItems = useAppSelector(
     (state: RootState) => state.OrderSlice.orderItems
   );
 

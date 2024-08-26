@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./App.module.scss";
 import Header from "../AppHeader/Header/Header";
-import store from "../../services/reducers/store";
-import { Provider, useDispatch } from "react-redux";
+import { useAppDispatch } from "../../services/hooks/hooks";
 import {
   BrowserRouter,
   Route,
@@ -26,6 +25,8 @@ import Layout from "./Layout";
 import FeedId from "../../pages/FeedId/FeedId";
 import ProfileOrders from "../../pages/ProfileOrders/ProfileOrders";
 import OrderList from "../../pages/OrderList/OrderList";
+import store from "../../services/reducers/store";
+import { Provider } from "react-redux";
 
 interface LocationState {
   background?: Location;
@@ -33,7 +34,7 @@ interface LocationState {
 
 const AppContent: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch(); // Используем типизированный хук
   const navigate = useNavigate();
   const location = useLocation() as { state: LocationState };
   const background = location.state && location.state.background;

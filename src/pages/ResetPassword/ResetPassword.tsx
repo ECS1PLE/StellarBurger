@@ -7,7 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, { useEffect } from "react";
 import HelpUser from "../../components/AppMain/HelpUser/HelpUser";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../services/hooks/hooks";
 import { setValue } from "../../services/reducers/ResetPassword";
 import { newPassword } from "../../services/actions/ResetPasswordThunk";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +18,7 @@ const ResetPassword: React.FC = () => {
   const [name, setName] = React.useState<string>("");
   const navigate = useNavigate();
 
-  const TokenToReset = useSelector(
+  const TokenToReset = useAppSelector(
     (state: RootState) => state.resetPasswordSlice.resetToken
   );
 
@@ -36,7 +36,7 @@ const ResetPassword: React.FC = () => {
     }
   }, [TokenToReset, navigate]);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleResetPassword = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

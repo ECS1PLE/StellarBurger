@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../services/hooks/hooks";
 import { fetchOrderDetails } from "../../services/actions/UserOrders";
 import styles from "./FeedId.module.scss";
 import OrderBlock from "../../components/AppMain/OrderBlock/OrderBlock";
@@ -28,12 +28,12 @@ interface FeedDetails {
 const FeedId: React.FC<FeedDetails> = () => {
   const { orderId } = useParams<{ orderId: string }>();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const orderDetails = useSelector(
+  const orderDetails = useAppSelector(
     (state: RootState) => state.UserOrders.details
   );
-  const ingredients = useSelector(
+  const ingredients = useAppSelector(
     (state: RootState) => state.burgerIngredients.ingredients
   );
 

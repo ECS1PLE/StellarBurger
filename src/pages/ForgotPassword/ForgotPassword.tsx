@@ -7,14 +7,14 @@ import {
 import React, { ChangeEvent, FormEvent } from "react";
 import HelpUser from "../../components/AppMain/HelpUser/HelpUser";
 import { resetPassword } from "../../services/actions/ForgotPasswordThunk";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../services/hooks/hooks";
 import { useNavigate } from "react-router-dom";
 import { setValue } from "../../services/reducers/ResetPassword";
 
 const ForgetPassword: React.FC = () => {
   const navigate = useNavigate();
   const [value, setVal] = React.useState<string>("");
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setVal(e.target.value);

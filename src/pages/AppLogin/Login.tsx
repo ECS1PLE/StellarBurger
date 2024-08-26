@@ -8,22 +8,24 @@ import React, { useEffect } from "react";
 import HelpUser from "../../components/AppMain/HelpUser/HelpUser";
 import PageHeader from "../../components/AppMain/PageHeader/PageHeader";
 import { Enter } from "../../services/actions/Login";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../services/hooks/hooks";
 import { setValue } from "../../services/reducers/ResetPassword";
 import { useNavigate } from "react-router";
 import { RootState } from "../../services/reducers/store";
 
 const Login: React.FC = () => {
-  const statusAuth = useSelector(
+  const statusAuth = useAppSelector(
     (state: RootState) => state.resetPasswordSlice.statusAuth
   );
-  const from = useSelector((state: RootState) => state.resetPasswordSlice.from);
+  const from = useAppSelector(
+    (state: RootState) => state.resetPasswordSlice.from
+  );
 
   const navigate = useNavigate();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
