@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import socketMiddleware from "../socketMiddleware/socketMiddleware";
 
 interface Order {
   id: number;
@@ -15,10 +16,6 @@ interface OrdersResponse {
   totalToday: number;
 }
 
-interface ErrorResponse {
-  message: string; // сообщение об ошибке
-}
-
 const OrderListSocket = (url: string) => {
   const [ordersResponse, setOrdersResponse] = useState<OrdersResponse>({
     total: 0,
@@ -29,41 +26,32 @@ const OrderListSocket = (url: string) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log(url);
-    const socket = new WebSocket(url);
-
-    socket.onopen = () => {
-      console.log("WebSocket connected");
-    };
-
-    socket.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      if ("message" in data) {
-        setError(data.message);
+    const actions = {
+      onMessage: (data: OrdersResponse) => {
+        setOrdersResponse(data);
+        setError(null);
+      },
+      onError: (error: string) => {
+        setError(error);
         setOrdersResponse({
           total: 0,
           totalToday: 0,
           orders: [],
         });
-      } else {
-        // Успешный ответ
-        setOrdersResponse({ ...data });
-        setError(null);
-      }
+      },
     };
 
-    socket.onclose = () => {
-      console.log("WebSocket disconnected");
-    };
+    const middleware = socketMiddleware({ url, actions });
 
     return () => {
-      socket.close();
+      middleware.close();
     };
   }, [url]);
+
   return {
-    orders: ordersResponse?.["orders"],
-    total: ordersResponse?.["total"],
-    totalToday: ordersResponse?.totalToday,
+    orders: ordersResponse.orders,
+    total: ordersResponse.total,
+    totalToday: ordersResponse.totalToday,
     error,
   };
 };

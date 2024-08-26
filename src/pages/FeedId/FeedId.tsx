@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchOrderDetails } from "../../services/actions/UserOrders";
 import styles from "./FeedId.module.scss";
 import OrderBlock from "../../components/AppMain/OrderBlock/OrderBlock";
 import {
   FormattedDate,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { RootState } from "../../services/reducers/store";
 
 interface Ingredient {
   _id: string;
@@ -23,30 +25,21 @@ interface FeedDetails {
   createdAt: string;
 }
 
-const FeedId: React.FC = () => {
+const FeedId: React.FC<FeedDetails> = () => {
   const { orderId } = useParams<{ orderId: string }>();
-  const [orderDetails, setOrderDetails] = useState<FeedDetails | null>(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  const orderDetails = useSelector(
+    (state: RootState) => state.UserOrders.details
+  );
   const ingredients = useSelector(
-    (state: any) => state.burgerIngredients.ingredients
+    (state: RootState) => state.burgerIngredients.ingredients
   );
 
   useEffect(() => {
-    const fetchOrderDetails = async () => {
-      const response = await fetch(
-        `https://norma.nomoreparties.space/api/orders/${orderId}`
-      );
-      const orderData = await response.json();
-
-      if (orderData && orderData.orders) {
-        setOrderDetails(orderData.orders[0]);
-      } else {
-        console.error("Нет такого заказа", orderData);
-      }
-    };
-
-    fetchOrderDetails();
-  }, [orderId]);
+    dispatch(fetchOrderDetails({ orderId }));
+  }, [dispatch, orderId]);
 
   if (!orderDetails) {
     return <div>Загрузка...</div>;
@@ -66,7 +59,11 @@ const FeedId: React.FC = () => {
     }
   });
 
-  // Вычисление общей суммы заказа
+  if (Object.values(ingredientCount).length === 0) {
+    navigate("/profile/orders");
+    return null;
+  }
+
   const totalAmount = Object.values(ingredientCount).reduce(
     (acc, { count, ingredient }) => {
       return acc + ingredient.price * count;
@@ -81,19 +78,15 @@ const FeedId: React.FC = () => {
       <h4 className={styles.doneOrder}>{orderDetails.status}</h4>
       <h2>Состав:</h2>
       <div className={styles.ordersInfo}>
-        {Object.values(ingredientCount).length > 0 ? (
-          Object.values(ingredientCount).map(({ count, ingredient }, index) => (
-            <OrderBlock
-              key={ingredient._id}
-              image={ingredient.image}
-              name={ingredient.name}
-              count={count}
-              price={ingredient.price}
-            />
-          ))
-        ) : (
-          <p>Ингредиенты отсутствуют</p>
-        )}
+        {Object.values(ingredientCount).map(({ count, ingredient }, index) => (
+          <OrderBlock
+            key={index}
+            image={ingredient.image}
+            name={ingredient.name}
+            count={count}
+            price={ingredient.price}
+          />
+        ))}
       </div>
       <div className={styles.bottomContent}>
         <FormattedDate date={new Date(orderDetails.createdAt)} />

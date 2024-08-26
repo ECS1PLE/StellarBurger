@@ -1,7 +1,6 @@
 import React, { useEffect, ReactNode } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, Navigate } from "react-router-dom";
-import PropTypes from "prop-types";
 import { setValue } from "../../services/reducers/ResetPassword";
 import { RootState } from "../../services/reducers/store"; // Adjust the import according to your store structure
 
@@ -41,9 +40,4 @@ const ProtectedRouteElement: React.FC<ProtectedRouteElementProps> = ({
 
   return <>{children}</>;
 };
-
-ProtectedRouteElement.propTypes = {
-  children: PropTypes.element.isRequired,
-};
-
 export default ProtectedRouteElement;
