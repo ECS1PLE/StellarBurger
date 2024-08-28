@@ -1,5 +1,5 @@
 import React, { useEffect, ReactNode } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../services/hooks/hooks";
 import { useLocation, Navigate } from "react-router-dom";
 import { setValue } from "../../services/reducers/ResetPassword";
 import { RootState } from "../../services/reducers/store"; // Adjust the import according to your store structure
@@ -14,12 +14,14 @@ const ProtectedRouteElement: React.FC<ProtectedRouteElementProps> = ({
   children,
 }) => {
   const location = useLocation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const isAuthenticated = useSelector(
+  const isAuthenticated = useAppSelector(
     (state: RootState) => state.resetPasswordSlice.statusAuth
   );
-  const from = useSelector((state: RootState) => state.resetPasswordSlice.from);
+  const from = useAppSelector(
+    (state: RootState) => state.resetPasswordSlice.from
+  );
 
   useEffect(() => {
     if (!isAuthenticated) {
