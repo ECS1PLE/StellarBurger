@@ -1,6 +1,5 @@
 import styles from "./Ingredient.module.scss";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-// import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
 import { useLocation, useNavigate } from "react-router";
 

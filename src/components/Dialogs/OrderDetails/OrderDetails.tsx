@@ -1,10 +1,10 @@
 import styles from "./OrderDetails.module.scss";
-import { useSelector } from "react-redux";
 import { RootState } from "../../../services/reducers/store";
 import React, { SyntheticEvent } from "react";
+import { useAppSelector } from "../../../services/hooks/hooks";
 
 const OrderDetails: React.FC = () => {
-  const orderNumber = useSelector(
+  const orderNumber = useAppSelector(
     (state: RootState) => state.OrderSlice.order?.order?.number || ""
   );
 

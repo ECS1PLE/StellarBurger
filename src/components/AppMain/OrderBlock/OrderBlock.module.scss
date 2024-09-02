@@ -1,0 +1,52 @@
+.mainBlock {
+  height: 64px;
+  width: 100%;
+  display: flex;
+}
+
+.borderImg {
+  box-sizing: border-box;
+  width: 64px;
+  height: 64px;
+  background: #131316;
+  border-radius: 100px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  border: 3px solid #801ab2;
+}
+
+.borderImg > img {
+  width: fit-content;
+  height: 56px;
+  margin-left: -26px;
+}
+
+.mainBlock > p {
+  margin: auto 0 auto 16px;
+  /* name */
+  font-family: "Jet Brains Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #f2f2f3;
+  width: fit-content;
+}
+
+.rightPriceBlock {
+  margin-left: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  display: flex;
+  gap: 8px;
+}
+
+.rightPriceBlock > p {
+  font-family: "Iceland";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 24px;
+  color: #f2f2f3;
+}

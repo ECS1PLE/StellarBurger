@@ -1,13 +1,15 @@
 import React from "react";
+import { Link, useLocation } from "react-router-dom";
 import styles from "./ProfileMenu.module.scss";
 import { LogOut } from "../../../services/actions/LogOut";
-import { useDispatch } from "react-redux";
 import { setValue } from "../../../services/reducers/ResetPassword";
 
-const ProfileMenu: React.FC = () => {
-  const dispatch = useDispatch();
+import { useAppDispatch } from "../../../services/hooks/hooks";
 
-  // Типизируем событие как SyntheticEvent
+const ProfileMenu: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const location = useLocation();
+
   const handleResetPassword = (event: React.SyntheticEvent) => {
     event.preventDefault();
     dispatch(LogOut());
@@ -26,20 +28,33 @@ const ProfileMenu: React.FC = () => {
   return (
     <>
       <div className={styles.ProfileBlocks}>
-        <div className={`${styles.ProfileBlock} ${styles.activeProfileBlock}`}>
+        <Link
+          to="/profile"
+          className={`${styles.ProfileBlock} ${
+            location.pathname === "/profile/" ||
+            location.pathname === "/profile"
+              ? styles.activeProfileBlock
+              : ""
+          }`}
+        >
           <p>Профиль</p>
-        </div>
-        <div className={styles.ProfileBlock}>
+        </Link>
+        <Link
+          to="/profile/orders"
+          className={`${styles.ProfileBlock} ${
+            location.pathname === "/profile/orders"
+              ? styles.activeProfileBlock
+              : ""
+          }`}
+        >
           <p>История заказов</p>
-        </div>
+        </Link>
         <div className={styles.ProfileBlock} onClick={handleResetPassword}>
           <p>Выход</p>
         </div>
       </div>
-      <p className={`mt-20 ${styles.mark}`}>
-        В этом разделе вы можете
-        <br />
-        изменить свои персональные данные
+      <p className={`${styles.mark} mt-20`}>
+        В этом разделе вы можете <br /> изменить свои персональные данные
       </p>
     </>
   );

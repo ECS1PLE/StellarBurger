@@ -4,7 +4,10 @@ import Ingredient from "../Ingredient/Ingridient.tsx";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect, useState } from "react";
 import ModalDialog from "../../Dialogs/ModalDialog/ModalDialog";
-import { useDispatch, useSelector } from "react-redux";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../../services/hooks/hooks.tsx";
 import { resetError } from "../../../services/reducers/BurgerIngredientsSlice";
 import { useInView } from "react-intersection-observer";
 import { ingridientsThunk } from "../../../services/actions/IngridientsThunk";
@@ -38,16 +41,16 @@ const BuildBurger: React.FC = () => {
 
   const refs = { bun: refBun, sauce: refSauce, main: refMain };
 
-  const orderItems: OrderItem[] = useSelector(
+  const orderItems: OrderItem[] = useAppSelector(
     (state: RootState) => state.OrderSlice.orderItems
   );
-  const ingredients: IngredientItem[] = useSelector(
+  const ingredients: IngredientItem[] = useAppSelector(
     (state: RootState) => state.burgerIngredients.ingredients
   );
-  const loadingError: string | null = useSelector(
+  const loadingError: string | null = useAppSelector(
     (state: RootState) => state.burgerIngredients.ingredientsError
   );
-  const dispatcher = useDispatch();
+  const dispatcher = useAppDispatch();
 
   useEffect(() => {
     if (inViewBun) {

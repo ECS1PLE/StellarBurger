@@ -43,7 +43,6 @@ const constructorReducer = (state: State, action: Action): State => {
   }
 };
 
-// Create the context with TypeScript
 interface ConstructorContextType {
   state: State;
   dispatch: Dispatch<Action>;

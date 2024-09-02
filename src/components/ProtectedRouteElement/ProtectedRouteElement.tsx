@@ -1,7 +1,6 @@
 import React, { useEffect, ReactNode } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../services/hooks/hooks";
 import { useLocation, Navigate } from "react-router-dom";
-import PropTypes from "prop-types";
 import { setValue } from "../../services/reducers/ResetPassword";
 import { RootState } from "../../services/reducers/store"; // Adjust the import according to your store structure
 
@@ -15,12 +14,14 @@ const ProtectedRouteElement: React.FC<ProtectedRouteElementProps> = ({
   children,
 }) => {
   const location = useLocation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const isAuthenticated = useSelector(
+  const isAuthenticated = useAppSelector(
     (state: RootState) => state.resetPasswordSlice.statusAuth
   );
-  const from = useSelector((state: RootState) => state.resetPasswordSlice.from);
+  const from = useAppSelector(
+    (state: RootState) => state.resetPasswordSlice.from
+  );
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -29,18 +30,16 @@ const ProtectedRouteElement: React.FC<ProtectedRouteElementProps> = ({
   }, [location, isAuthenticated, dispatch]);
 
   if (!isAuthenticated && !allowedPaths.includes(location.pathname)) {
+    console.log("REDIRECT TO LOGIN");
     return <Navigate to="/login" state={{ from: location.pathname }} replace />;
   }
 
-  if (isAuthenticated && from && from !== location.pathname) {
-    return <Navigate to={from} replace />;
-  }
+  // if (isAuthenticated && from && from !== location.pathname) {
+  //   console.log(`REDIRECT TO ${from} ${location.pathname}`);
+
+  //   return <Navigate to={from} replace />;
+  // }
 
   return <>{children}</>;
 };
-
-ProtectedRouteElement.propTypes = {
-  children: PropTypes.element.isRequired,
-};
-
 export default ProtectedRouteElement;

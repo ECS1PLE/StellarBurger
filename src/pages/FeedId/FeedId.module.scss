@@ -1,0 +1,111 @@
+.mainFeedContent {
+  margin-top: auto;
+  margin-bottom: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.mainFeedContent > p {
+  font-family: "Iceland";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 24px;
+  color: #f2f2f3;
+  margin-bottom: 40px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mainFeedContent > h3 {
+  margin-top: 0;
+  font-family: "Jet Brains Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+  color: #f2f2f3;
+  margin-bottom: 12px;
+}
+
+.mainFeedContent > h3 {
+  margin-top: 0;
+  font-family: "Jet Brains Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+  color: #f2f2f3;
+  margin-bottom: 12px;
+}
+
+.mainFeedContent > h4 {
+  font-family: "Jet Brains Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  margin-top: 0;
+  margin-bottom: 60px;
+}
+
+.doneOrder {
+  color: #00cccc;
+}
+
+.mainFeedContent > h2 {
+  /* Состав: */
+  font-family: "Jet Brains Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+  color: #f2f2f3;
+  margin-top: 0;
+}
+
+.ordersInfo {
+  width: 100%;
+  padding-right: 24px;
+  height: 366px;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.bottomContent {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.bottomContent > span {
+  font-family: "Jet Brains Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px; /* identical to box height, or 150% */
+  color: #8585ad; /* Inside auto layout */
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.bottomContent > div {
+  display: flex;
+  gap: 8px;
+}
+
+.bottomContent > div > p {
+  font-family: "Iceland";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 28px;
+  display: flex;
+  color: #f2f2f3; /* Inside auto layout */
+}
+
+.bottomContent > div > svg {
+  margin: auto 0;
+}
