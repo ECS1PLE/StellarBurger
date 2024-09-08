@@ -7,6 +7,7 @@ import { Enter } from "../actions/Login";
 import { resetPassword } from "../actions/ForgotPasswordThunk";
 import { getUserInfo } from "../actions/UserInfo";
 
+// Define the structure of the initial state
 interface ResetPasswordState {
   email: string;
   password: string;
@@ -17,9 +18,10 @@ interface ResetPasswordState {
   accessToken: string;
   resetToken: boolean;
   from: string;
-  error: null | string;
+  error: string | null; // error can be a string or null
 }
 
+// Initialize the state with the specified types
 const initialState: ResetPasswordState = {
   email: "",
   password: "",
@@ -33,49 +35,34 @@ const initialState: ResetPasswordState = {
   error: null,
 };
 
-// Define the slice
 const resetPasswordSlice = createSlice({
   name: "resetPassword",
   initialState,
   reducers: {
     setValue(state, action: PayloadAction<Partial<ResetPasswordState>>) {
-      const updates = action.payload;
-      Object.entries(updates).forEach(([key, value]) => {
-        if (key in state) {
-          // @ts-ignore
-          state[key] = value!;
-        }
+      Object.keys(action.payload).forEach((key) => {
+        state[key as keyof ResetPasswordState] =
+          action.payload[key as keyof ResetPasswordState];
       });
     },
   },
   extraReducers: (builder) => {
+    const handleRejected = (state: ResetPasswordState, action: any) => {
+      state.error = action.error.message;
+    };
+
     builder
-      .addCase(newPassword.rejected, (state, action) => {
-        state.error = action.error.message ?? "An error occurred";
-      })
-      .addCase(registerAcc.rejected, (state, action) => {
-        state.error = action.error.message ?? "An error occurred";
-      })
-      .addCase(setUserInfo.rejected, (state, action) => {
-        state.error = action.error.message ?? "An error occurred";
-      })
-      .addCase(LogOut.rejected, (state, action) => {
-        state.error = action.error.message ?? "An error occurred";
-      })
-      .addCase(Enter.rejected, (state, action) => {
-        state.error = action.error.message ?? "An error occurred";
-      })
-      .addCase(resetPassword.rejected, (state, action) => {
-        state.error = action.error.message ?? "An error occurred";
-      })
-      .addCase(getUserInfo.rejected, (state, action) => {
-        state.error = action.error.message ?? "An error occurred";
-      });
+      .addCase(newPassword.rejected, handleRejected)
+      .addCase(registerAcc.rejected, handleRejected)
+      .addCase(setUserInfo.rejected, handleRejected)
+      .addCase(LogOut.rejected, handleRejected)
+      .addCase(Enter.rejected, handleRejected)
+      .addCase(resetPassword.rejected, handleRejected)
+      .addCase(getUserInfo.rejected, handleRejected);
   },
 });
 
 export const { setValue } = resetPasswordSlice.actions;
-
 export default resetPasswordSlice.reducer;
 
 // Exporting actions

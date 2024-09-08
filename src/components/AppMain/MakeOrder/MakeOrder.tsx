@@ -97,7 +97,6 @@ const MakeOrder = () => {
           htmlType="button"
           type="primary"
           size="large"
-          id="order-button"
           onClick={handleOrder}
         >
           Оформить заказ

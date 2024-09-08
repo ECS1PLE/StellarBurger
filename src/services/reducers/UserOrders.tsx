@@ -1,28 +1,13 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { fetchOrderDetails } from "../actions/UserOrders";
 
-interface OrderDetails {
-  id: string;
-  items: any[]; // Замените на правильную структуру, если есть
-  total: number;
-  status: string;
-}
-
-interface OrderState {
-  details: OrderDetails | null;
-  loading: boolean;
-  error: string | null;
-}
-
-const initialState: OrderState = {
-  details: null,
-  loading: false,
-  error: null,
-};
-
-const UserOrders = createSlice({
+const UserOrdres = createSlice({
   name: "order",
-  initialState,
+  initialState: {
+    details: null,
+    loading: false,
+    error: null,
+  },
   reducers: {
     clearOrder: (state) => {
       state.details = null;
@@ -36,21 +21,18 @@ const UserOrders = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(
-        fetchOrderDetails.fulfilled,
-        (state, action: PayloadAction<OrderDetails>) => {
-          state.loading = false;
-          state.details = action.payload;
-        }
-      )
+      .addCase(fetchOrderDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.details = action.payload; // Исправлено
+      })
       .addCase(fetchOrderDetails.rejected, (state, action) => {
         state.loading = false;
-        state.error = (action.payload as string) || "Ошибка получения заказа";
+        state.error = action.error.message;
       });
   },
 });
 
 // Экспортируем редьюсер и экшены
-export const { clearOrder } = UserOrders.actions;
+export const { clearOrder } = UserOrdres.actions;
 
-export default UserOrders.reducer;
+export default UserOrdres.reducer;

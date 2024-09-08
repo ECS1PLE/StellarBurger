@@ -147,7 +147,6 @@ const BurgerConstructor: React.FC<BurgerConstructorProps> = () => {
           isOver ? styles.BurgerConstructorBlock : ""
         }`}
         ref={dropRef}
-        id="dropHere"
       >
         {constructorStructure.map((structureItem, index) => (
           <div

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import checkResponse from "../utils/CheckResponse";
+import checkResponce from "../utils/CheckResponse.ts";
 
 interface ResetPasswordSliceState {
   password: string;
@@ -8,20 +8,17 @@ interface ResetPasswordSliceState {
 }
 
 interface RegisterResponse {
-  data: any; // Измените тип на более конкретный, если возможно
+  data: any;
 }
 
 const registerAcc = createAsyncThunk<
   RegisterResponse,
   void,
-  {
-    state: { resetPasswordSlice: ResetPasswordSliceState };
-    rejectValue: unknown;
-  }
->("User/Register", async (_, { getState, rejectWithValue }) => {
+  { state: { resetPasswordSlice: ResetPasswordSliceState } }
+>("User/Register", async (_, { getState }) => {
   const { password, email, name } = getState().resetPasswordSlice;
   const response = await fetch(
-    `https://norma.nomoreparties.space/api/orders/auth/register`,
+    `${import.meta.env.VITE_API_URL}/auth/register`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -33,12 +30,7 @@ const registerAcc = createAsyncThunk<
     }
   );
 
-  try {
-    const data = await checkResponse(response); // Проверьте, что это возвращает RegisterResponse
-    return data; // Предполагается, что checkResponce возвращает RegisterResponse
-  } catch (error) {
-    return rejectWithValue(error); // Если произошла ошибка, возвращаем RejectWithValue
-  }
+  return (await checkResponce(response))?.data;
 });
 
 export { registerAcc };

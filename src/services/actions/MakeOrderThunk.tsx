@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import checkResponse from "../utils/CheckResponse";
+import checkResponce from "../utils/CheckResponse.ts";
 import Cookies from "js-cookie";
 
 interface OrderState {
@@ -23,7 +23,7 @@ const makeOrderThunk = createAsyncThunk<
   try {
     const ingredients = state.OrderSlice.orderItems.map(({ id }) => id);
     const response = await fetch(
-      `$https://norma.nomoreparties.space/api/orders?token=${accessToken}`,
+      `${import.meta.env.VITE_API_URL}/orders?token=${accessToken}`,
       {
         method: "POST",
         headers: {
@@ -35,7 +35,7 @@ const makeOrderThunk = createAsyncThunk<
         }),
       }
     );
-    return await checkResponse(response);
+    return await checkResponce(response);
   } catch (error) {
     return rejectWithValue(
       error instanceof Error ? error.message : "Unknown error"

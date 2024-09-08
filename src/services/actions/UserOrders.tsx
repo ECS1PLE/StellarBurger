@@ -1,43 +1,32 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import checkResponse from "../utils/CheckResponse";
+import checkResponse from "../utils/CheckResponse.ts";
 
-// Интерфейсы
 interface Order {
   id: string;
   name: string;
-  items: any[]; // Убедитесь, что это соответствует структуре OrderDetails
-  total: number;
-  status: string;
 }
 
 interface FetchOrderDetailsParams {
   orderId: string;
 }
+type FetchOrderDetailsResponse = Order;
 
-// Интерфейс для ответа API
-interface ApiResponse {
-  data: Order[];
-}
+const fetchOrderDetails = createAsyncThunk<
+  FetchOrderDetailsResponse, // Тип возвращаемого значения
+  FetchOrderDetailsParams // Тип параметров, которые передаются в thunk
+>("order/fetchOrderDetails", async ({ orderId }) => {
+  const response = await fetch(
+    `https://norma.nomoreparties.space/api/orders/${orderId}`
+  );
 
-// Создание асинхронного thunk
-export const fetchOrderDetails = createAsyncThunk<
-  Order, // Тип данных, которые будут возвращены
-  FetchOrderDetailsParams // Тип параметров
->("order/fetchOrderDetails", async ({ orderId }, { rejectWithValue }) => {
-  try {
-    const response = await fetch(
-      `https://norma.nomoreparties.space/api/orders/${orderId}`
-    );
+  const orderData = await checkResponse(response);
 
-    // Проверьте, соответствует ли тип возвращаемого значения ApiResponse
-    const orderData: ApiResponse = await checkResponse(response);
-
-    if (orderData && orderData.data && orderData.data.length > 0) {
-      return orderData.data[0]; // Возвращаем первый заказ из массива
-    } else {
-      throw new Error("Order not found");
-    }
-  } catch (error: any) {
-    return rejectWithValue(error.message || "Error fetching order details");
+  if (orderData && orderData.orders) {
+    return orderData.orders[0];
+  } else {
+    console.error("Нет такого заказа", orderData);
+    throw new Error("Ошибка получения заказа");
   }
 });
+
+export { fetchOrderDetails };

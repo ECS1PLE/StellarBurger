@@ -7,15 +7,5 @@
     {
       "path": "./tsconfig.node.json"
     }
-  ],
-  "compilerOptions": {
-    "module": "commonjs", // or "esnext" depending on your setup
-    "target": "es6",
-    "jsx": "react-jsx",
-    "types": ["vite/client", "node", "mocha", "jest"],
-    "baseUrl": "./",
-    "paths": {
-      "*": ["node_modules/*"]
-    }
-  }
+  ]
 }
