@@ -1,13 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import checkResponce from "../utils/CheckResponse.ts";
+import checkResponce from "../utils/CheckResponse";
 
 interface Ingredient {
-  data: any;
+  id: string;
+  name: string;
+  price: number;
 }
 
 interface ApiResponse {
   data: Ingredient[];
 }
+
+const apiUrl = "https://norma.nomoreparties.space/api";
 
 const ingridientsThunk = createAsyncThunk<
   Ingredient[],
@@ -15,7 +19,7 @@ const ingridientsThunk = createAsyncThunk<
   { rejectValue: string }
 >("burgerIngredients/loadList", async (_, { rejectWithValue }) => {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/ingredients`);
+    const response = await fetch(`${apiUrl}/ingredients`);
     const result: ApiResponse = await checkResponce(response);
     return result.data;
   } catch (error) {

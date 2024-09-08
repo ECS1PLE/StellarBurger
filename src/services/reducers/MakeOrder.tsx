@@ -1,31 +1,35 @@
-import { createContext, Dispatch, ReactNode } from "react";
+import { createContext, Dispatch } from "react";
 
-// Define the shape of your application state
+// Определите форму состояния вашего приложения
 interface State {
-  // Define your state properties here
-  // For example:
-  // count: number;
+  count: number;
 }
 
-// Define the shape of your actions
+// Определите форму ваших действий
 interface Action {
   type: string;
-  payload?: any; // Define a more specific type if needed
+  payload?: any; // Определите более конкретный тип, если нужно
 }
 
-// Create a reducer function with typed state and action
-const MakeReducer = (state: State, action: Action): State => {
+// Создайте функцию редюсера с типизированным состоянием и действиями
+// reducers/MakeOrder.js
+
+const MakeReducer = (state = { count: 0 }, action) => {
   switch (action.type) {
+    case "INCREMENT":
+      return {
+        ...state,
+        count: state.count + (action.payload || 1), // If payload is provided, increment by it; otherwise, increment by 1.
+      };
     default:
-      return state;
+      return state; // Return the initial state for unknown actions
   }
 };
 
-// Define the context type
+// Определите тип контекста
 type OrderContextType = [State, Dispatch<Action>];
 
-// Create the context with the defined type
-const OrderContext =
-  (createContext < OrderContextType) | (undefined > undefined);
+// Создайте контекст с определенным типом
+const OrderContext = createContext<OrderContextType | undefined>(undefined);
 
 export { MakeReducer, OrderContext };

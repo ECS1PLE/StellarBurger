@@ -79,13 +79,12 @@ export const OrderSlice = createSlice({
           state.order = { ...action.payload };
         }
       )
-      .addCase(
-        makeOrderThunk.rejected,
-        (state, action: PayloadAction<string | undefined>) => {
-          state.orderLoading = false;
-          state.orderError = action.payload || "Error occurred";
-        }
-      );
+      .addCase(makeOrderThunk.rejected, (state, action) => {
+        state.orderLoading = false;
+        state.orderError = action.payload
+          ? (action.payload as string)
+          : "Error occurred";
+      });
   },
 });
 

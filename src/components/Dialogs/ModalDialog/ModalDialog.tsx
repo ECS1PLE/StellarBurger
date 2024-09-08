@@ -42,7 +42,7 @@ const ModalDialog: React.FC<ModalDialogProps> = ({ children, onClose }) => {
   return createPortal(
     <>
       <Overlay onClose={handleOverlayClick} />
-      <div className={`${styles.modal} ${styles.centerModel}`}>
+      <div className={`${styles.modal} ${styles.centerModel}`} id="modalDialog">
         <CloseModal onClose={handleCloseClick} />
         {children}
       </div>
