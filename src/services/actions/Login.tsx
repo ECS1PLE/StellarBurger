@@ -1,17 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import checkResponce from "../utils/CheckResponse.ts";
-import { setValue } from "../reducers/ResetPassword.js";
+import checkResponse from "../utils/CheckResponse";
+import { setValue } from "../reducers/ResetPassword";
 import Cookies from "js-cookie";
-
-interface LoginResponse {
-  accessToken: string;
-  refreshToken: string;
-  user: {
-    name: string;
-  };
-  success: boolean;
-  data?: any;
-}
 
 interface RootState {
   resetPasswordSlice: {
@@ -20,28 +10,44 @@ interface RootState {
   };
 }
 
+// Define a type for the response data structure
+interface LoginResponse {
+  success: boolean;
+  accessToken?: string;
+  refreshToken?: string;
+  user?: {
+    name: string;
+  };
+}
+
 const Enter = createAsyncThunk<any, void, { state: RootState }>(
   "User/Login",
   async (_, { getState, dispatch }) => {
     const { password, email } = getState().resetPasswordSlice;
 
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+    const response = await fetch(
+      `https://norma.nomoreparties.space/api/auth/login`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      }
+    );
 
-    const responseData: LoginResponse = await checkResponce(response);
-    const data = responseData?.data;
+    const responseData: LoginResponse = await checkResponse(response); // Cast to LoginResponse here
 
-    if (responseData) {
-      console.log(responseData);
+    // Use optional chaining to safely access properties
+    if (responseData?.success) {
+      const accessToken = responseData.accessToken;
+      const refreshToken = responseData.refreshToken;
+      const userName = responseData.user?.name;
+
       const cookiesData = {
-        accessToken: responseData.accessToken,
-        refreshToken: responseData.refreshToken,
+        accessToken,
+        refreshToken,
         email,
         password,
-        name: responseData.user.name,
+        name: userName,
         statusAuth: true,
       };
 
@@ -54,18 +60,18 @@ const Enter = createAsyncThunk<any, void, { state: RootState }>(
       dispatch(
         setValue({
           statusAuth: responseData.success,
-          refreshToken: responseData.refreshToken,
-          accessToken: responseData.accessToken,
+          refreshToken,
+          accessToken,
           email,
           password,
-          name: responseData.user.name,
+          name: userName,
         })
       );
     } else {
       dispatch(setValue({ statusAuth: false }));
     }
 
-    return data;
+    return responseData; // Ensure responseData is returned correctly
   }
 );
 

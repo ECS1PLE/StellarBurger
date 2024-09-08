@@ -4,6 +4,8 @@
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
     "skipLibCheck": true,
     "module": "ESNext",
+    "target": "ESNext",
+    "forceConsistentCasingInFileNames": true,
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
     "strict": true,
