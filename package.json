@@ -3,12 +3,15 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "./",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "test": "jest"
+    "test": "jest",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@cypress/webpack-preprocessor": "^6.0.2",
