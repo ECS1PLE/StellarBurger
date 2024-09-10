@@ -1,5 +1,8 @@
 import { describe, expect, test } from "@jest/globals";
-import UserOrdersReducer, { clearOrder } from "../reducers/UserOrders";
+import UserOrdersReducer, {
+  clearOrder,
+  initialState,
+} from "../reducers/UserOrders";
 import { fetchOrderDetails } from "../actions/UserOrders";
 
 // Создаем фиктивные данные для тестов
@@ -8,13 +11,6 @@ const mockOrderDetails = {
   items: [{ name: "Item 1", quantity: 1 }],
   total: 100,
   status: "completed",
-};
-
-// Создаем начальное состояние
-const initialState = {
-  details: null,
-  loading: false,
-  error: null,
 };
 
 describe("UserOrders slice", () => {

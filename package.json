@@ -11,7 +11,9 @@
     "preview": "vite preview",
     "test": "jest",
     "deploy": "gh-pages -d build",
-    "predeploy": "npm run build"
+    "predeploy": "npm run build",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "dependencies": {
     "@cypress/webpack-preprocessor": "^6.0.2",

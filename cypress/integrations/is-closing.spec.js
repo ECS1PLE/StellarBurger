@@ -1,6 +1,6 @@
 describe("Модальное окно", () => {
   beforeEach(() => {
-    cy.visit("localhost:5173/");
+    cy.visit(Cypress.config("baseUrl"));
   });
 
   it("должно закрываться при клике на иконку закрытия", () => {

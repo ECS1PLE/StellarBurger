@@ -14,7 +14,7 @@ interface OrderState {
   info?: Record<string, any>;
 }
 
-const initialState: OrderState = {
+export const initialState: OrderState = {
   orderItems: [],
   order: {},
   orderLoading: false,

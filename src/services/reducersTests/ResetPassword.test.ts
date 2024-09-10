@@ -7,22 +7,10 @@ import {
   Enter,
   resetPassword,
   getUserInfo,
+  initialState,
 } from "../reducers/ResetPassword";
 
 describe("resetPasswordSlice", () => {
-  const initialState = {
-    email: "",
-    password: "",
-    token: "",
-    name: "",
-    statusAuth: false,
-    refreshToken: "",
-    accessToken: "",
-    resetToken: false,
-    from: "",
-    error: null,
-  };
-
   it("should return the initial state when called with an undefined state", () => {
     const result = resetPasswordReducer(undefined, { type: "" });
     expect(result).toEqual(initialState);

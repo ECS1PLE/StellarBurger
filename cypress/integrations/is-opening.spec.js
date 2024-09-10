@@ -1,11 +1,11 @@
 describe("Drag and Drop Ingredients", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:5173/");
+    cy.visit(Cypress.config("baseUrl"));
 
-    cy.intercept("GET", "https://norma.nomoreparties.space/api/auth/user", {
+    cy.intercept("GET", `${Cypress.config("baseUrl")}/auth/user`, {
       fixture: "user.json",
     });
-    cy.intercept("POST", "https://norma.nomoreparties.space/api/orders", {
+    cy.intercept("POST", `${Cypress.config("baseUrl")}/orders`, {
       fixture: "order.json",
     }).as("postOrder");
 

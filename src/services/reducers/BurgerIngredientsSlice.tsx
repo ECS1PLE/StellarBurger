@@ -15,7 +15,7 @@ interface BurgerIngredientsState {
   info?: Partial<Ingredient>;
 }
 
-const initialState: BurgerIngredientsState = {
+export const initialState: BurgerIngredientsState = {
   ingredients: [],
   ingredientsLoading: false,
   ingredientsError: "",

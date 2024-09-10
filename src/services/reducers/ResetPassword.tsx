@@ -20,7 +20,7 @@ interface ResetPasswordState {
   error: null | string;
 }
 
-const initialState: ResetPasswordState = {
+export const initialState: ResetPasswordState = {
   email: "",
   password: "",
   token: "",

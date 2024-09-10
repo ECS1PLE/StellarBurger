@@ -1,6 +1,6 @@
 describe("Drag and Drop Ingredients", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:5173/");
+    cy.visit(Cypress.config("baseUrl"));
   });
 
   it("should drag and drop an ingredient from BurgerIngredients to BurgerConstructor", () => {

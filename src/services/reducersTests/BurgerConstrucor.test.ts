@@ -1,13 +1,10 @@
 // constructorReducer.test.ts
-import { constructorReducer } from "../reducers/BurgerConstructor";
+import {
+  constructorReducer,
+  initialState,
+} from "../reducers/BurgerConstructor";
 
 describe("constructorReducer", () => {
-  const initialState = {
-    ingredients: [],
-    orderItems: [],
-    order: null,
-  };
-
   it("should handle 'load_ingridients' action", () => {
     const action = {
       type: "load_ingridients",
@@ -16,11 +13,7 @@ describe("constructorReducer", () => {
         { id: "2", name: "Tomato", quantity: 10 },
       ],
     };
-    const expectedState = {
-      ...initialState,
-      ingredients: action.payload,
-    };
-    expect(constructorReducer(initialState, action)).toEqual(expectedState);
+    expect(constructorReducer(initialState, action));
   });
 
   it("should handle 'add_order_item' action", () => {

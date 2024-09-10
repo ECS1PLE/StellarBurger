@@ -18,6 +18,13 @@ interface State {
   order: any;
 }
 
+// Define the initial state
+const initialState: State = {
+  ingredients: [],
+  orderItems: [],
+  order: null, // or whatever the initial value should be
+};
+
 interface Action {
   type: string;
   payload: any;
@@ -25,8 +32,8 @@ interface Action {
 
 const constructorReducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case "load_ingridients":
-      return { ...state, ingredients: [...action.payload] };
+    case "load_ingredients":
+      return { ...state, ingredients: [...action.payload] }; // Fixed typo: "ingridients" -> "ingredients"
     case "add_order_item":
       return { ...state, orderItems: [...state.orderItems, action.payload] };
     case "remove_order_item":
@@ -50,4 +57,4 @@ interface ConstructorContextType {
 
 const ConstructorContext = createContext<ConstructorContextType | null>(null);
 
-export { constructorReducer, ConstructorContext };
+export { initialState, constructorReducer, ConstructorContext };

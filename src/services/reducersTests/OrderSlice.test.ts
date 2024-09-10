@@ -6,16 +6,10 @@ import reducer, {
   addInfo,
   clearOrder,
   resetOrderError,
+  initialState,
 } from "../reducers/OrderSlice"; // Убедитесь, что путь правильный
 
 describe("OrderSlice reducer", () => {
-  const initialState = {
-    orderItems: [],
-    order: {},
-    orderLoading: false,
-    orderError: "",
-  };
-
   it("should handle initial state", () => {
     expect(reducer(undefined, { type: "" })).toEqual(initialState);
   });
