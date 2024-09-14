@@ -12,9 +12,10 @@ interface BurgerIngredientsState {
   ingredients: Ingredient[];
   ingredientsLoading: boolean;
   ingredientsError: string;
+  info?: Partial<Ingredient>;
 }
 
-const initialState: BurgerIngredientsState = {
+export const initialState: BurgerIngredientsState = {
   ingredients: [],
   ingredientsLoading: false,
   ingredientsError: "",
@@ -24,8 +25,8 @@ const burgerIngredientsSlice = createSlice({
   name: "burgerIngredients",
   initialState,
   reducers: {
-    loadIngridients: (state, action: PayloadAction<Ingredient[]>) => {
-      state.ingredients = [...action.payload];
+    loadIngredients: (state, action: PayloadAction<Ingredient[]>) => {
+      state.ingredients = action.payload;
     },
     addIngredient: (state, action: PayloadAction<Ingredient>) => {
       state.ingredients.push(action.payload);
@@ -50,33 +51,29 @@ const burgerIngredientsSlice = createSlice({
       .addCase(ingridientsThunk.pending, (state) => {
         state.ingredientsLoading = true;
       })
-      .addCase(
-        ingridientsThunk.fulfilled,
-        (state, action: PayloadAction<Ingredient[]>) => {
-          state.ingredientsLoading = false;
-          state.ingredients = action.payload.map((item) => ({
-            ...item,
-            balance: item.price,
-          }));
-        }
-      )
-      .addCase(
-        ingridientsThunk.rejected,
-        (state, action: PayloadAction<string>) => {
-          state.ingredientsLoading = false;
-          state.ingredientsError = action.payload;
-        }
-      );
+      .addCase(ingridientsThunk.fulfilled, (state, action) => {
+        state.ingredientsLoading = false;
+        state.ingredients = action.payload.map((item) => ({
+          ...item,
+          balance: item.price,
+        }));
+      })
+      .addCase(ingridientsThunk.rejected, (state, action) => {
+        state.ingredientsLoading = false;
+        state.ingredientsError = action.payload || "Error fetching ingredients";
+      });
   },
 });
 
+// Export actions
 export const {
+  loadIngredients,
   addIngredient,
   removeIngredient,
   clearIngredients,
-  loadIngridients,
   addInfo,
   resetError,
 } = burgerIngredientsSlice.actions;
 
+// Export reducer
 export default burgerIngredientsSlice.reducer;

@@ -38,6 +38,7 @@ const Ingredient = (props: IngredientProps) => {
         className={`${styles.Ingredient} pr-4 rl-4 ${
           isDragging ? "IsDragging" : ""
         }`}
+        id="ingredientBlock"
         onClick={handleClick}
       >
         <img src={props.image} alt={props.name} />

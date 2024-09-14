@@ -14,8 +14,8 @@ const CloseModal: React.FC<CloseModalProps> = ({ onClose, addClass }) => {
   };
 
   return (
-    <div className={`${styles.IconRight} ${addClass || ""}`}>
-      <CloseIcon type="primary" onClick={handleClose} />
+    <div className={`${styles.IconRight} ${addClass || ""}`} id="iconRight">
+      <CloseIcon type="primary" onClick={handleClose} id="iconRight" />
     </div>
   );
 };

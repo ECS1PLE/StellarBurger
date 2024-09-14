@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import checkResponce from "../utils/CheckResponse.ts";
+import checkResponce from "../utils/CheckResponse";
 
 interface LogoutResponse {
   data?: any;
@@ -17,13 +17,16 @@ const LogOut = createAsyncThunk<
   { state: RootState }
 >("User/LogOut", async (_, { getState }) => {
   const refreshToken = getState().resetPasswordSlice.refreshToken;
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/logout`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      token: refreshToken,
-    }),
-  });
+  const response = await fetch(
+    `https://norma.nomoreparties.space/api/auth/logout`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        token: refreshToken,
+      }),
+    }
+  );
 
   return (await checkResponce(response))?.data;
 });

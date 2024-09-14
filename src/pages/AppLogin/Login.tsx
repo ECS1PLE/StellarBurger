@@ -62,12 +62,14 @@ const Login: React.FC = () => {
               value={email}
               name="email"
               isIcon={false}
+              id="email"
             />
             <PasswordInput
               onChange={onChangePass}
               value={password}
               name="password"
               extraClass="mb-2"
+              id="password"
             />
             <Button htmlType="submit" type="primary" size="large">
               Войти
